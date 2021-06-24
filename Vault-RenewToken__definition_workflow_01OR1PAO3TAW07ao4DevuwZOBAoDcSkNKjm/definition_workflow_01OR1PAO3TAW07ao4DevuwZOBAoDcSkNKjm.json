@@ -26,7 +26,7 @@
         "is_atomic": true
       },
       "delete_workflow_instance": true,
-      "description": "Pre-Requisite: Create an HTTP Target for your HashiCorp Vault instance and point this atomic to it.\n\nThis atomic returns the same token you pass in, but the lease period for the given token will be extended. The ideal way to use this would be to use this atomic in a workflow, which would be run on a schedule. Ensure that the \"Clean Up After Successful Execution\" option is checked on the workflow to avoid exposure of sensitive/privileged information.",
+      "description": "Pre-Requisite: Create an HTTP Target for your HashiCorp Vault instance and point this atomic to it.\n\nThis atomic returns the same token you pass in, but the lease period for the given token will be extended. The ideal way to use this would be to use this atomic in a workflow, which would be run on a schedule. Ensure that the \"Clean Up After Successful Execution\" option is checked on the workflow to avoid exposure of sensitive/privileged information.\n\nDocs: https://www.vaultproject.io/api-docs/auth/token#renew-a-token",
       "display_name": "Vault - Renew Token",
       "runtime_user": {
         "target_default": true
