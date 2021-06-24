@@ -1,0 +1,112 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01P6CIVMFKOUU3CwI3kPJhsn8NmUkUvlodw",
+    "name": "String - Base64 Auth Encoding",
+    "title": "String - Base64 Auth Encoding",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Username",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01P6DVB4FYZ8V5fNbFnkFtYerdesSM0n2bT",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Encoded Password",
+          "type": "datatype.secure_string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01P6DVNFE8V0B3xMtniFY8p9XHymMk1O4Lb",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Password",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01P6DVHVVB09M7MSnDBzYAHFE6NWr45vzMg",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Utilities",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": true,
+      "description": "This atomic action takes a username \u0026 password and returns a secure string with the Base64 equivalent that can be readily passed to an HTTP Basic Authorization Header.",
+      "display_name": "String - Base64 Auth Encoding",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "no_target": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01P6CJ2ORZR734JjCUFTusQKXswAWfH4sbs",
+        "name": "Execute Python Script",
+        "title": "Convert to Base64",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "Convert to Base64",
+          "script": "import base64\ninput_string = \"$workflow.definition_workflow_01P6CIVMFKOUU3CwI3kPJhsn8NmUkUvlodw.input.variable_workflow_01P6DVB4FYZ8V5fNbFnkFtYerdesSM0n2bT$:$workflow.definition_workflow_01P6CIVMFKOUU3CwI3kPJhsn8NmUkUvlodw.input.variable_workflow_01P6DVHVVB09M7MSnDBzYAHFE6NWr45vzMg$\"\ninput_string_bytes = input_string.encode(\"ascii\")\n  \nbase64_bytes = base64.b64encode(input_string_bytes)\nbase64_string = base64_bytes.decode(\"ascii\")",
+          "script_queries": [
+            {
+              "script_query": "base64_string",
+              "script_query_name": "Encoded String",
+              "script_query_type": "secure_string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01P6DWGMUN4LT4HI1YrBwSNjt73z7kZutwc",
+        "name": "Set Variables",
+        "title": "Set Output",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Output",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01P6CIVMFKOUU3CwI3kPJhsn8NmUkUvlodw.output.variable_workflow_01P6DVNFE8V0B3xMtniFY8p9XHymMk1O4Lb$",
+              "variable_value_new": "$activity.definition_activity_01P6CJ2ORZR734JjCUFTusQKXswAWfH4sbs.output.script_queries.Encoded String$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
