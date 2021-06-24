@@ -1,0 +1,77 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01OR1PAO3TAW07ao4DevuwZOBAoDcSkNKjm",
+    "name": "Vault - Renew Token",
+    "title": "Vault - Renew Token",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Current Token",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OR1WB171OQJ1P9fe7dRuAS3cDPKq6KppA",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "HashiCorp Vault",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": true,
+      "description": "Pre-Requisite: Create an HTTP Target for your HashiCorp Vault instance and point this atomic to it.\n\nThis atomic returns the same token you pass in, but the lease period for the given token will be extended. The ideal way to use this would be to use this atomic in a workflow, which would be run on a schedule. Ensure that the \"Clean Up After Successful Execution\" option is checked on the workflow to avoid exposure of sensitive/privileged information.",
+      "display_name": "Vault - Renew Token",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01OR1PEFM3CPE18oAutR9bUmQhlUiDerYnk",
+        "name": "HTTP Request",
+        "title": "Renew Token",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "body": "{\n\"token\":\"$workflow.definition_workflow_01OR1PAO3TAW07ao4DevuwZOBAoDcSkNKjm.input.variable_workflow_01OR1WB171OQJ1P9fe7dRuAS3cDPKq6KppA$\"\n}",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "X-Vault-Token",
+              "value": "$workflow.definition_workflow_01OR1PAO3TAW07ao4DevuwZOBAoDcSkNKjm.input.variable_workflow_01OR1WB171OQJ1P9fe7dRuAS3cDPKq6KppA$"
+            }
+          ],
+          "display_name": "Renew Token",
+          "method": "POST",
+          "relative_url": "/auth/token/renew",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
