@@ -1,0 +1,140 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01OR0GMVJSGWV0BfwgnaW7ppXJWKlkg40Bb",
+    "name": "Vault - Push/Update Secret",
+    "title": "Vault - Push/Update Secret",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "ananambi-secret/data/something",
+          "scope": "input",
+          "name": "Secret Path",
+          "type": "datatype.string",
+          "description": "Must follow the format engine/data/secret, where engine refers to the highest level secret engine and 'secret' refers to the secret stored in the engine.",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OR0JCNHEZ433YK3PPukq7VFX4ZKXCtuYw",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "CMS-platops/amasarda",
+          "scope": "input",
+          "name": "Vault Namaspace",
+          "type": "datatype.string",
+          "description": "Path to your Vault Namespace",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OR0MGO1GK372kKqe5Ax0E3Y9MS2grqYsQ",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "cust1",
+          "scope": "input",
+          "name": "Key/Identifier",
+          "type": "datatype.string",
+          "description": "The key/identifier you'd like the secret to be identified with. This is the key associated to the value that may be the secret you're pushing.",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OR0IRAVASRL13X92RV8RRlYmkPGK8zrLi",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "*****",
+          "scope": "input",
+          "name": "Vault Token",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OR0NK7S2QUB7L6LoGXf0WclKYv2t4hViV",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Token To Be Pushed",
+          "type": "datatype.secure_string",
+          "description": "This is the secret value you'd like to preserve",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OR0J1NC5CSN2rk6Q6N80SrWroiobXp88R",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "HashiCorp Vault",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "WARNING: This will overwrite all the secrets stored in the path specified.\n\nPre-Requisite: Create an HTTP Target for your HashiCorp Vault instance and point this atomic to it.\n\nDocs: https://www.vaultproject.io/api-docs/secret/cubbyhole#create-update-secret",
+      "display_name": "Vault - Push/Update Secret",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01OR0GOFZZGYU729o66nwpf7J2C6TPK5E2d",
+        "name": "HTTP Request",
+        "title": "Push To Vault",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "body": "{\n  \"data\": {\n    \"$workflow.definition_workflow_01OR0GMVJSGWV0BfwgnaW7ppXJWKlkg40Bb.input.variable_workflow_01OR0IRAVASRL13X92RV8RRlYmkPGK8zrLi$\": \"$workflow.definition_workflow_01OR0GMVJSGWV0BfwgnaW7ppXJWKlkg40Bb.input.variable_workflow_01OR0J1NC5CSN2rk6Q6N80SrWroiobXp88R$\"\n  }\n}",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "X-Vault-Token",
+              "value": "$workflow.definition_workflow_01OR0GMVJSGWV0BfwgnaW7ppXJWKlkg40Bb.input.variable_workflow_01OR0NK7S2QUB7L6LoGXf0WclKYv2t4hViV$"
+            },
+            {
+              "name": "X-Vault-Namespace",
+              "value": "$workflow.definition_workflow_01OR0GMVJSGWV0BfwgnaW7ppXJWKlkg40Bb.input.variable_workflow_01OR0MGO1GK372kKqe5Ax0E3Y9MS2grqYsQ$"
+            }
+          ],
+          "display_name": "Push To Vault",
+          "method": "POST",
+          "relative_url": "$workflow.definition_workflow_01OR0GMVJSGWV0BfwgnaW7ppXJWKlkg40Bb.input.variable_workflow_01OR0JCNHEZ433YK3PPukq7VFX4ZKXCtuYw$",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
