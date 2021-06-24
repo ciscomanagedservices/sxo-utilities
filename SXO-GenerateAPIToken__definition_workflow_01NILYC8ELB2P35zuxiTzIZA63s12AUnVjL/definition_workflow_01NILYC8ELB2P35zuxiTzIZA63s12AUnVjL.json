@@ -1,0 +1,207 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01NILYC8ELB2P35zuxiTzIZA63s12AUnVjL",
+    "name": "SXO Token Generation",
+    "title": "SXO Token Generation",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "SXO JWT",
+          "type": "datatype.secure_string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01NJNFQZEF27C0wx8YBLTZqD5ERPLLW8oq0",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "description": "WARNING: EXPERIMENTAL USE ONLY\nSecureX Orchestrator (SXO) APIs are not generally available/exposed in production yet. However, if the ‘AO’ API scope were to be added to a SecureX API Client, this workflow demonstrates how to use such an API Client to generate and retrieve a JWT token that can be used to make API calls to SXO, assuming the API methods are known to the user. The methodology used in this workflow may be subject to change once this functionality is available in production.\n\nSteps involved:\n1. Generate a new Access Token for Cisco Threat Response (CTR) using the SecureX API Client (with AO scope added) credentials defined in the Account Key for the ‘CTR Admin’ target. This returns the SecureX Auth Token.\n2. Use the SecureX Auth Token to make a call to CTR’s AO endpoint to generate the JWT\n3. Clean up response\n4. Output a secure string with the SXO JWT\n\nA given SXO JWT is valid only for ~10 minutes and needs to be regenerated thereafter using the same methodology. ",
+      "display_name": "SXO Token Generation",
+      "runtime_user": {
+        "runtime_user_id": "definition_runtime_user_01NDTZXG9G7M25msWDVbAjcxdTcYKtdvG8b",
+        "override_target_runtime_user": true,
+        "runtime_user_type": "runtime_user.web-service_basic_credentials"
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "target_id": "definition_target_01NDU0CZRJT6Y3teqALAe6bW8HBlj6mfRUV",
+        "execute_on_workflow_target": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01NILYNYXSCYN2pvlLuLTcqs66Ec9lwWW1D",
+        "name": "CTRGenerateAccessToken",
+        "title": "CTRGenerateAccessToken",
+        "type": "workflow.atomic_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "CTRGenerateAccessToken",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "target_type": "web-service.endpoint",
+            "use_workflow_target": true
+          },
+          "workflow_id": "definition_workflow_01779LB6MV0P02kvka9TGV5cEam84NrCTy4"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01NIN7LVCB16A3AHI1aMpXr122hI0iipufz",
+        "name": "HTTP Request",
+        "title": "Generate AO JWT",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer $activity.definition_activity_01NILYNYXSCYN2pvlLuLTcqs66Ec9lwWW1D.output.variable_workflow_01BNOOXA3G6MV1PGAvsfZOKDdMYcE6XS726$"
+            }
+          ],
+          "display_name": "Generate AO JWT",
+          "method": "POST",
+          "relative_url": "ao/gen-jwt",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": true,
+            "target_id": "definition_target_01NEG5ZCSYPPS1qTEQalXwAT9X6vzsmQiH9"
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01NIS2D01TLCE4XLBQ1g3zfoqLghRslZg77",
+        "name": "Replace String",
+        "title": "Remove Quotes",
+        "type": "core.replacestring",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Remove Quotes",
+          "input_string": "$activity.definition_activity_01NIN7LVCB16A3AHI1aMpXr122hI0iipufz.output.response_body$",
+          "replace_list": [
+            {
+              "replaced_string": "\"",
+              "replacement_string": ""
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01NIS2NXHISAA5KwGPyeuMVIwE2FlD3wYGV",
+        "name": "Set Variables",
+        "title": "Set Output Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Output Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01NILYC8ELB2P35zuxiTzIZA63s12AUnVjL.output.variable_workflow_01NJNFQZEF27C0wx8YBLTZqD5ERPLLW8oq0$",
+              "variable_value_new": "$activity.definition_activity_01NIS2D01TLCE4XLBQ1g3zfoqLghRslZg77.output.result_string$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_01EI33LMFFL7N5eTQLsOOJIrxdlSOHb7r3r"
+    ]
+  },
+  "categories": {
+    "category_01EI33LMFFL7N5eTQLsOOJIrxdlSOHb7r3r": {
+      "unique_name": "category_01EI33LMFFL7N5eTQLsOOJIrxdlSOHb7r3r",
+      "name": "SecureX",
+      "title": "SecureX",
+      "type": "basic.category",
+      "base_type": "category",
+      "category_type": "custom",
+      "object_type": "category"
+    }
+  },
+  "targets": {
+    "definition_target_01NDU0CZRJT6Y3teqALAe6bW8HBlj6mfRUV": {
+      "unique_name": "definition_target_01NDU0CZRJT6Y3teqALAe6bW8HBlj6mfRUV",
+      "name": "CTR API",
+      "title": "CTR API",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "default_runtime_user_id": "definition_runtime_user_01NDTZXG9G7M25msWDVbAjcxdTcYKtdvG8b",
+        "disable_certificate_validation": true,
+        "display_name": "CTR API",
+        "host": "visibility.amp.cisco.com",
+        "ignore_proxy": false,
+        "no_runtime_user": false,
+        "path": "/iroh",
+        "protocol": "https"
+      }
+    },
+    "definition_target_01NEG5ZCSYPPS1qTEQalXwAT9X6vzsmQiH9": {
+      "unique_name": "definition_target_01NEG5ZCSYPPS1qTEQalXwAT9X6vzsmQiH9",
+      "name": "CTR_API",
+      "title": "CTR API Target",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "description": "Target used to invoke iroh endpoints",
+        "disable_certificate_validation": false,
+        "display_name": "CTR_API",
+        "host": "visibility.amp.cisco.com",
+        "no_runtime_user": true,
+        "path": "/iroh",
+        "protocol": "https"
+      }
+    }
+  },
+  "runtime_users": {
+    "definition_runtime_user_01NDTZXG9G7M25msWDVbAjcxdTcYKtdvG8b": {
+      "unique_name": "definition_runtime_user_01NDTZXG9G7M25msWDVbAjcxdTcYKtdvG8b",
+      "name": "CTR Admin",
+      "title": "CTR Admin",
+      "type": "runtime_user.web-service_basic_credentials",
+      "base_type": "runtime_user",
+      "object_type": "definition_runtime_user",
+      "properties": {
+        "auth_option": "*****",
+        "basic_password": "*****",
+        "basic_username": "*****",
+        "display_name": "CTR Admin"
+      }
+    }
+  },
+  "atomic_workflows": [
+    "definition_workflow_01779LB6MV0P02kvka9TGV5cEam84NrCTy4"
+  ]
+}
