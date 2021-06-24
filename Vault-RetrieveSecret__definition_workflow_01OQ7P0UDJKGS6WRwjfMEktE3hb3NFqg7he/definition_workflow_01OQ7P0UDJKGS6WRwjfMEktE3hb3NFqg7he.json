@@ -1,0 +1,160 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01OQ7P0UDJKGS6WRwjfMEktE3hb3NFqg7he",
+    "name": "Vault - Retrieve Secret",
+    "title": "Vault - Retrieve Secret",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "*****",
+          "scope": "input",
+          "name": "Vault Token",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OQ8865YV6GM3gfDF6mMEu8kkwKAOm8Pxb",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Token",
+          "type": "datatype.secure_string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OQ7W1G3X2DY3SC0rLktvWNkk0FhaK14pX",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "alphaeast.keeper.cisco.com",
+          "scope": "input",
+          "name": "Vault Domain",
+          "type": "datatype.string",
+          "description": "Such as:\nalphaeast.keeper.cisco.com\nwest.keeper.cisco.com",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OY483OPTBX85N59UvAPQ7Ge04YnuGUsrX",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "CMS-platops/amasarda",
+          "scope": "input",
+          "name": "Vault Namespace",
+          "type": "datatype.string",
+          "description": "Path to your Vault Namespace",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OQ83144Q9547GbCxjmteLqhMkSjaOYDPk",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "ananambi-secret/data/something",
+          "scope": "input",
+          "name": "Secret Path",
+          "type": "datatype.string",
+          "description": "Must follow the format engine/data/secret, where engine refers to the highest level secret engine and 'secret' refers to the secret stored in the engine.",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OQ82JUYOTT00P71BCfDLh6is5TDPzk8Wb",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "cust1",
+          "scope": "input",
+          "name": "Key/Identifier",
+          "type": "datatype.string",
+          "description": "This is the key your token may be stored against inside of your secret. The value corresponding to the key you provide here will be returned.",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OQ7UY8V88CC4wugzULCXz8BJRcTctm7sy",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "HashiCorp Vault",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "No Targets need to be pre-defined for this atomic action. Instead, information is fed in as inputs.\n\nThe atomic action expects the secret path to be of the form \n'engine/data/secret', where engine refers to the highest level secret engine and 'secret' refers to the secret stored in the engine. Other inputs are self-explanatory.\n\nOutput is a Secure String variable called Token that is the token retrieved from Vault for a given key/identifier.",
+      "display_name": "Vault - Retrieve Secret",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "execute_on_target_group": false,
+        "execute_on_workflow_target": false,
+        "no_target": true,
+        "specify_on_workflow_start": false
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01OQWY4H810Q17Lfy6f85DNZmpESyarzMZq",
+        "name": "Execute Python Script",
+        "title": "Retrieve Secret",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "Retrieve Secret",
+          "script": "import requests\nimport json\nheaders = {\"X-Vault-Token\":\"$workflow.definition_workflow_01OQ7P0UDJKGS6WRwjfMEktE3hb3NFqg7he.input.variable_workflow_01OQ8865YV6GM3gfDF6mMEu8kkwKAOm8Pxb$\",\"X-Vault-Namespace\":\"$workflow.definition_workflow_01OQ7P0UDJKGS6WRwjfMEktE3hb3NFqg7he.input.variable_workflow_01OQ83144Q9547GbCxjmteLqhMkSjaOYDPk$\"}\nresponse = requests.get(\"https://$workflow.definition_workflow_01OQ7P0UDJKGS6WRwjfMEktE3hb3NFqg7he.input.variable_workflow_01OY483OPTBX85N59UvAPQ7Ge04YnuGUsrX$/v1/$workflow.definition_workflow_01OQ7P0UDJKGS6WRwjfMEktE3hb3NFqg7he.input.variable_workflow_01OQ82JUYOTT00P71BCfDLh6is5TDPzk8Wb$\",headers=headers)\ntoken = response.json()['data']['$workflow.definition_workflow_01OQ7P0UDJKGS6WRwjfMEktE3hb3NFqg7he.input.variable_workflow_01OQ7UY8V88CC4wugzULCXz8BJRcTctm7sy$']",
+          "script_queries": [
+            {
+              "script_query": "token",
+              "script_query_name": "token",
+              "script_query_type": "secure_string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01OQ7VKIHL3292Y08DroGOAOkkVRs0RkzG2",
+        "name": "Set Variables",
+        "title": "Set Output",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Output",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01OQ7P0UDJKGS6WRwjfMEktE3hb3NFqg7he.output.variable_workflow_01OQ7W1G3X2DY3SC0rLktvWNkk0FhaK14pX$",
+              "variable_value_new": "$activity.definition_activity_01OQWY4H810Q17Lfy6f85DNZmpESyarzMZq.output.script_queries.token$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
