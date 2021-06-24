@@ -9,6 +9,19 @@
       {
         "schema_id": "datatype.secure_string",
         "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Token",
+          "type": "datatype.secure_string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01OQ7W1G3X2DY3SC0rLktvWNkk0FhaK14pX",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
           "value": "*****",
           "scope": "input",
           "name": "Vault Token",
@@ -20,16 +33,17 @@
         "object_type": "variable_workflow"
       },
       {
-        "schema_id": "datatype.secure_string",
+        "schema_id": "datatype.string",
         "properties": {
-          "value": "",
-          "scope": "output",
-          "name": "Token",
-          "type": "datatype.secure_string",
-          "is_required": false,
+          "value": "cust1",
+          "scope": "input",
+          "name": "Key/Identifier",
+          "type": "datatype.string",
+          "description": "This is the key your token may be stored against inside of your secret. The value corresponding to the key you provide here will be returned.",
+          "is_required": true,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01OQ7W1G3X2DY3SC0rLktvWNkk0FhaK14pX",
+        "unique_name": "variable_workflow_01OQ7UY8V88CC4wugzULCXz8BJRcTctm7sy",
         "object_type": "variable_workflow"
       },
       {
@@ -49,20 +63,6 @@
       {
         "schema_id": "datatype.string",
         "properties": {
-          "value": "CMS-platops/amasarda",
-          "scope": "input",
-          "name": "Vault Namespace",
-          "type": "datatype.string",
-          "description": "Path to your Vault Namespace",
-          "is_required": true,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01OQ83144Q9547GbCxjmteLqhMkSjaOYDPk",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
           "value": "ananambi-secret/data/something",
           "scope": "input",
           "name": "Secret Path",
@@ -77,15 +77,15 @@
       {
         "schema_id": "datatype.string",
         "properties": {
-          "value": "cust1",
+          "value": "CMS-platops/amasarda",
           "scope": "input",
-          "name": "Key/Identifier",
+          "name": "Vault Namespace",
           "type": "datatype.string",
-          "description": "This is the key your token may be stored against inside of your secret. The value corresponding to the key you provide here will be returned.",
+          "description": "Path to your Vault Namespace",
           "is_required": true,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01OQ7UY8V88CC4wugzULCXz8BJRcTctm7sy",
+        "unique_name": "variable_workflow_01OQ83144Q9547GbCxjmteLqhMkSjaOYDPk",
         "object_type": "variable_workflow"
       }
     ],
@@ -95,7 +95,7 @@
         "is_atomic": true
       },
       "delete_workflow_instance": false,
-      "description": "No Targets need to be pre-defined for this atomic action. Instead, information is fed in as inputs.\n\nThe atomic action expects the secret path to be of the form \n'engine/data/secret', where engine refers to the highest level secret engine and 'secret' refers to the secret stored in the engine. Other inputs are self-explanatory.\n\nOutput is a Secure String variable called Token that is the token retrieved from Vault for a given key/identifier.",
+      "description": "No Targets need to be pre-defined for this atomic action. Instead, information is fed in as inputs.\n\nThe atomic action expects the secret path to be of the form \n'engine/data/secret', where engine refers to the highest level secret engine and 'secret' refers to the secret stored in the engine. Other inputs are self-explanatory.\n\nOutput is a Secure String variable called Token that is the token retrieved from Vault for a given key/identifier.\n\nDocs: https://www.vaultproject.io/docs/secrets/kv/kv-v1",
       "display_name": "Vault - Retrieve Secret",
       "runtime_user": {
         "override_target_runtime_user": false,
