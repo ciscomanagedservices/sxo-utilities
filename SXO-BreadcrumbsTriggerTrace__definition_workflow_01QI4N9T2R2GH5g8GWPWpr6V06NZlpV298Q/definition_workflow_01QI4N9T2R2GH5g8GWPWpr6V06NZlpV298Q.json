@@ -10,19 +10,6 @@
         "schema_id": "datatype.string",
         "properties": {
           "value": "",
-          "scope": "input",
-          "name": "Instance To Be Searched",
-          "type": "datatype.string",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01QPPS6YZI4IO4CUDyYHa7s0fnNyMEawawn",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
           "scope": "output",
           "name": "Trace Output",
           "type": "datatype.string",
@@ -30,6 +17,19 @@
           "is_invisible": false
         },
         "unique_name": "variable_workflow_01QPHIBA54VOH2ryJSw1kuWiDOt5kOgZ8KA",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Instance To Be Searched",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01QPPS6YZI4IO4CUDyYHa7s0fnNyMEawawn",
         "object_type": "variable_workflow"
       },
       {
@@ -56,6 +56,19 @@
           "is_invisible": false
         },
         "unique_name": "variable_workflow_01QZV2VBB7GFS5Z8wWoDRXLG5gll9JlnaUM",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Output JSON",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01R8CMK953KXT7lJzfGkSUGbajJ3DtRklnF",
         "object_type": "variable_workflow"
       },
       {
@@ -298,12 +311,12 @@
                   {
                     "unique_name": "definition_activity_01QZV3A70FRJN7gevRb48VAjxZHW0jrBJLP",
                     "name": "Set Variables",
-                    "title": "Set Variables",
+                    "title": "Set SQL Query",
                     "type": "core.set_multiple_variables",
                     "base_type": "activity",
                     "properties": {
                       "continue_on_failure": false,
-                      "display_name": "Set Variables",
+                      "display_name": "Set SQL Query",
                       "skip_execution": false,
                       "variables_to_update": [
                         {
@@ -319,13 +332,13 @@
               {
                 "unique_name": "definition_activity_01QZV4K5VTL0C4nFGvYTcKN7KUuOexV48nI",
                 "name": "Substring",
-                "title": "Substring",
+                "title": "Remove Unwanted Chars From SQL Query",
                 "type": "core.substring",
                 "base_type": "activity",
                 "properties": {
                   "begin": 3,
                   "continue_on_failure": false,
-                  "display_name": "Substring",
+                  "display_name": "Remove Unwanted Chars From SQL Query",
                   "skip_execution": false,
                   "source": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.local.variable_workflow_01QZV2VBB7GFS5Z8wWoDRXLG5gll9JlnaUM$"
                 },
@@ -334,13 +347,13 @@
               {
                 "unique_name": "definition_activity_01QZUGVARD49G0dBI6QHXOFy54Z818k2qTr",
                 "name": "Select from Table",
-                "title": "Select from Table",
+                "title": "Fetch All Logs",
                 "type": "core.selectfromtable",
                 "base_type": "activity",
                 "properties": {
                   "action_timeout": 180,
                   "continue_on_failure": false,
-                  "display_name": "Select from Table",
+                  "display_name": "Fetch All Logs",
                   "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
                   "number_of_rows": {
                     "all_rows": true
@@ -357,15 +370,41 @@
               {
                 "unique_name": "definition_activity_01R01T96RJCHH5PjacqoRQmRxqBzXnvVNQ9",
                 "name": "Execute Python Script",
-                "title": "Execute Python Script",
+                "title": "Form JSON Output",
                 "type": "python3.script",
                 "base_type": "activity",
                 "properties": {
                   "action_timeout": 180,
                   "continue_on_failure": false,
-                  "display_name": "Execute Python Script",
+                  "display_name": "Form JSON Output",
                   "script": "d = $activity.definition_activity_01QZUGVARD49G0dBI6QHXOFy54Z818k2qTr.output.response_body$\noutput_json = {}\nfor row in d:\n  try:\n    output_json[row['alt_instance_id']].append(row)\n  except:\n    output_json[row['alt_instance_id']] = [row]\nprint(output_json)\n  ",
+                  "script_queries": [
+                    {
+                      "script_query": "output_json",
+                      "script_query_name": "Output JSON",
+                      "script_query_type": "string"
+                    }
+                  ],
                   "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01R8CMNVH3JTF5W7pdk0CPNnxt8H4DboWHg",
+                "name": "Set Variables",
+                "title": "Set Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set Variables",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.output.variable_workflow_01R8CMK953KXT7lJzfGkSUGbajJ3DtRklnF$",
+                      "variable_value_new": "$activity.definition_activity_01R01T96RJCHH5PjacqoRQmRxqBzXnvVNQ9.output.script_queries.Output JSON$"
+                    }
+                  ]
                 },
                 "object_type": "definition_activity"
               }
@@ -568,12 +607,12 @@
                   {
                     "unique_name": "definition_activity_01R0MG5L2QW5N5xmaMfF6c2vbNsbIXeGtey",
                     "name": "Set Variables",
-                    "title": "Set Variables",
+                    "title": "Set SQL Query",
                     "type": "core.set_multiple_variables",
                     "base_type": "activity",
                     "properties": {
                       "continue_on_failure": false,
-                      "display_name": "Set Variables",
+                      "display_name": "Set SQL Query",
                       "skip_execution": false,
                       "variables_to_update": [
                         {
@@ -589,13 +628,13 @@
               {
                 "unique_name": "definition_activity_01R0MG9P0APJE1fCfaBLVh9LCQXZiQJUvcC",
                 "name": "Substring",
-                "title": "Substring",
+                "title": "Remove Unwanted Chars From SQL Query",
                 "type": "core.substring",
                 "base_type": "activity",
                 "properties": {
                   "begin": 3,
                   "continue_on_failure": false,
-                  "display_name": "Substring",
+                  "display_name": "Remove Unwanted Chars From SQL Query",
                   "skip_execution": false,
                   "source": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.local.variable_workflow_01QZV2VBB7GFS5Z8wWoDRXLG5gll9JlnaUM$"
                 },
@@ -604,13 +643,13 @@
               {
                 "unique_name": "definition_activity_01R0MGD880CMN14Pkx8M4Bv9izPIC2pzcGQ",
                 "name": "Select from Table",
-                "title": "Select from Table",
+                "title": "Fetch All Logs",
                 "type": "core.selectfromtable",
                 "base_type": "activity",
                 "properties": {
                   "action_timeout": 180,
                   "continue_on_failure": false,
-                  "display_name": "Select from Table",
+                  "display_name": "Fetch All Logs",
                   "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
                   "number_of_rows": {
                     "all_rows": true
@@ -627,15 +666,41 @@
               {
                 "unique_name": "definition_activity_01R0MGG0EL1HY4cmaBkyk2HW6hejy8YzRYQ",
                 "name": "Execute Python Script",
-                "title": "Execute Python Script",
+                "title": "Form JSON Output",
                 "type": "python3.script",
                 "base_type": "activity",
                 "properties": {
                   "action_timeout": 180,
                   "continue_on_failure": false,
-                  "display_name": "Execute Python Script",
+                  "display_name": "Form JSON Output",
                   "script": "d = $activity.definition_activity_01R0MGD880CMN14Pkx8M4Bv9izPIC2pzcGQ.output.response_body$\noutput_json = {}\nfor row in d:\n  try:\n    output_json[row['alt_instance_id']].append(row)\n  except:\n    output_json[row['alt_instance_id']] = [row]\nprint(output_json)\n  ",
+                  "script_queries": [
+                    {
+                      "script_query": "output_json",
+                      "script_query_name": "Output JSON",
+                      "script_query_type": "string"
+                    }
+                  ],
                   "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01R8CMYVDAKLM0SIpHkiXEU3bFNiIKrphuL",
+                "name": "Set Variables",
+                "title": "Set Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set Variables",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.output.variable_workflow_01R8CMK953KXT7lJzfGkSUGbajJ3DtRklnF$",
+                      "variable_value_new": "$activity.definition_activity_01R0MGG0EL1HY4cmaBkyk2HW6hejy8YzRYQ.output.script_queries.Output JSON$"
+                    }
+                  ]
                 },
                 "object_type": "definition_activity"
               }
@@ -1012,6 +1077,11 @@
       "display_name": "Logging Table Data Type With State",
       "columns": [
         {
+          "name": "instance_id",
+          "title": "Instance ID",
+          "type": "string"
+        },
+        {
           "name": "log",
           "title": "Log",
           "type": "string"
@@ -1034,11 +1104,6 @@
         {
           "name": "alt_instance_id",
           "title": "Alternative Instance ID",
-          "type": "string"
-        },
-        {
-          "name": "instance_id",
-          "title": "Instance ID",
           "type": "string"
         }
       ],
