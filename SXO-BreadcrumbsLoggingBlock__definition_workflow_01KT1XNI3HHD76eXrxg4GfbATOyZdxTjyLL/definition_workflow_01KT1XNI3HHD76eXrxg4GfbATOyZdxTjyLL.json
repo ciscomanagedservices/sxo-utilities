@@ -11,6 +11,19 @@
         "properties": {
           "value": "",
           "scope": "input",
+          "name": "Friendly Instance Id",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01R0NOJZZG63H0M5uXXGf9VPkkaIEbfjR8x",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
           "name": "Custom Log Message",
           "type": "datatype.string",
           "description": "This is an optional parameter that will be suffixed to the log message",
@@ -18,6 +31,19 @@
           "is_invisible": false
         },
         "unique_name": "variable_workflow_01R6P0FSMQYLV0jB6HJdE84PoPdfAeq5PdU",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "Activity Name",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KT3435AFTJB2sSt33NoKhXExtXALQsvE4",
         "object_type": "variable_workflow"
       },
       {
@@ -38,12 +64,12 @@
         "properties": {
           "value": "",
           "scope": "local",
-          "name": "Updated JSON",
+          "name": "Activity State",
           "type": "datatype.string",
           "is_required": false,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01KT33VLRYL2W50MUQPMoGJU9SMwpHzunBz",
+        "unique_name": "variable_workflow_01KT34HK99JJE13Qnzz6QhWc2u2WtlWVlRJ",
         "object_type": "variable_workflow"
       },
       {
@@ -63,6 +89,19 @@
         "schema_id": "datatype.string",
         "properties": {
           "value": "",
+          "scope": "local",
+          "name": "Updated JSON",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KT33VLRYL2W50MUQPMoGJU9SMwpHzunBz",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
           "scope": "input",
           "name": "Instance Id",
           "type": "datatype.string",
@@ -70,45 +109,6 @@
           "is_invisible": false
         },
         "unique_name": "variable_workflow_01KT1Y8RHG1OL4iDbT4vpIqW4CKeh4ia7E8",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "local",
-          "name": "Activity State",
-          "type": "datatype.string",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01KT34HK99JJE13Qnzz6QhWc2u2WtlWVlRJ",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "local",
-          "name": "Activity Name",
-          "type": "datatype.string",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01KT3435AFTJB2sSt33NoKhXExtXALQsvE4",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "input",
-          "name": "Friendly Instance Id",
-          "type": "datatype.string",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01R0NOJZZG63H0M5uXXGf9VPkkaIEbfjR8x",
         "object_type": "variable_workflow"
       }
     ],
@@ -192,12 +192,12 @@
       {
         "unique_name": "definition_activity_01LLUKUBI1PX03ZBsH2nSs0hZ1UWWilMTuF",
         "name": "Replace String",
-        "title": "Replace String",
+        "title": "Replace Characters For Easier Parsing",
         "type": "core.replacestring",
         "base_type": "activity",
         "properties": {
           "continue_on_failure": false,
-          "display_name": "Replace String",
+          "display_name": "Replace Characters For Easier Parsing",
           "input_string": "$activity.definition_activity_01KT1YE6V30WN3ovqW8h38E9tGJUEjvKf26.output.response_body$",
           "replace_list": [
             {
@@ -241,7 +241,7 @@
           {
             "unique_name": "definition_activity_01LM5H3PE7I7Y6k3oOQO6UiENlLXl3Q1mDT",
             "name": "Select from Table",
-            "title": "Select from Table",
+            "title": "Select Last Logged Activity from Table",
             "type": "core.selectfromtable",
             "base_type": "activity",
             "properties": {
@@ -253,7 +253,7 @@
                 }
               ],
               "continue_on_failure": false,
-              "display_name": "Select from Table",
+              "display_name": "Select Last Logged Activity from Table",
               "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
               "number_of_rows": {
                 "all_rows": true
@@ -272,12 +272,12 @@
           {
             "unique_name": "definition_activity_01LM6HHN1IFV45pVOKjzVSpvmTnoMIjK0Zq",
             "name": "Condition Block",
-            "title": "Condition Block",
+            "title": "If Any Activity Previously Logged",
             "type": "logic.if_else",
             "base_type": "activity",
             "properties": {
               "continue_on_failure": false,
-              "display_name": "Condition Block",
+              "display_name": "If Any Activity Previously Logged",
               "skip_execution": false
             },
             "object_type": "definition_activity",
@@ -285,7 +285,7 @@
               {
                 "unique_name": "definition_activity_01LM6HHU1OQO45Zkm3A66jHBurj1XsQvIh7",
                 "name": "Condition Branch",
-                "title": "Condition Branch",
+                "title": "If Any Activity Previously Logged",
                 "type": "logic.condition_block",
                 "base_type": "activity",
                 "properties": {
@@ -295,7 +295,7 @@
                     "right_operand": 0
                   },
                   "continue_on_failure": false,
-                  "display_name": "Condition Branch",
+                  "display_name": "If Any Activity Previously Logged",
                   "skip_execution": false
                 },
                 "object_type": "definition_activity",
@@ -303,12 +303,12 @@
                   {
                     "unique_name": "definition_activity_01LM6I5ATNR643c2PvMVAgZnudkrQiaYqEl",
                     "name": "Set Variables",
-                    "title": "Set Variables",
+                    "title": "Set Last Logged Activity",
                     "type": "core.set_multiple_variables",
                     "base_type": "activity",
                     "properties": {
                       "continue_on_failure": false,
-                      "display_name": "Set Variables",
+                      "display_name": "Set Last Logged Activity",
                       "skip_execution": false,
                       "variables_to_update": [
                         {
@@ -326,13 +326,13 @@
           {
             "unique_name": "definition_activity_01KVE2DU1NYGZ7XbFKiqRH9PqVeh60vBvLY",
             "name": "Execute Python Script",
-            "title": "Execute Python Script",
+            "title": "Run Python Script To Generate Logs",
             "type": "python3.script",
             "base_type": "activity",
             "properties": {
               "action_timeout": 180,
               "continue_on_failure": false,
-              "display_name": "Execute Python Script",
+              "display_name": "Run Python Script To Generate Logs",
               "script": "import json\nimport sys\nd = json.loads(f'''{sys.argv[1]}''')\nexisting = $activity.definition_activity_01LM5H3PE7I7Y6k3oOQO6UiENlLXl3Q1mDT.output.response_body$\nnew_existing = []\nfor action in existing:\n    new_existing.append(action['activity_id'])\nexisting = new_existing\noutput_str = ''\ndef get_logs(l):\n    # output_str = ''\n    global output_str\n    for action in l:\n        if \"Logging\" not in action['title'] and action['status']['state'] != 'created'  and action['status']['state'] != 'running' and f'''{action['id']},{action['title']},{action['status']['state']};''' not in output_str and action['id'] not in existing:\n            output_str += f'''{action['id']},{action['title']},{action['status']['state']};'''\n    # return output_str\ndef get_activities(d):\n    if d.get('actions'):\n        actions = d['actions']\n    elif d.get('blocks'):\n        actions = d['blocks']\n    logs = ''\n    for action in actions:\n        if action.get('blocks') or action.get('actions'):\n            get_activities(action)\n            # logs += get_activities(action)\n        elif 'Logging' in action['name']:\n            # logs += get_logs(actions)\n            get_logs(actions)\n    # return logs\n# final_logs = get_activities(d)\nget_activities(d)\nfinal_logs = output_str\nprint(final_logs)\n#if(int(sys.argv[2]) \u003e 0 and sys.argv[3]  and sys.argv[3] != 'None' and sys.argv[3] != ''):\n#    final_logs = final_logs.split(f'''{sys.argv[3]}''')[-1]\n#    # print(final_logs.split(f'''{sys.argv[3]}'''))\n#    final_logs = ';'.join(final_logs.split(';')[1:])\n#print(final_logs)",
               "script_arguments": [
                 "$activity.definition_activity_01LLUKUBI1PX03ZBsH2nSs0hZ1UWWilMTuF.output.result_string$",
@@ -353,12 +353,12 @@
           {
             "unique_name": "definition_activity_01R5YW9WAV8834IHbl60DjbISriy1soWfb8",
             "name": "Condition Block",
-            "title": "Condition Block",
+            "title": "If No New Activities To Log",
             "type": "logic.if_else",
             "base_type": "activity",
             "properties": {
               "continue_on_failure": false,
-              "display_name": "Condition Block",
+              "display_name": "If No New Activities To Log",
               "skip_execution": false
             },
             "object_type": "definition_activity",
@@ -366,7 +366,7 @@
               {
                 "unique_name": "definition_activity_01R5YWA3E3WIZ1PxamXpr8W0mUKXsSaXoq9",
                 "name": "Condition Branch",
-                "title": "Condition Branch",
+                "title": "If No New Activities To Log",
                 "type": "logic.condition_block",
                 "base_type": "activity",
                 "properties": {
@@ -376,7 +376,7 @@
                     "right_operand": ""
                   },
                   "continue_on_failure": false,
-                  "display_name": "Condition Branch",
+                  "display_name": "If No New Activities To Log",
                   "skip_execution": false
                 },
                 "object_type": "definition_activity",
@@ -402,7 +402,7 @@
           {
             "unique_name": "definition_activity_01KVE08KPHLJH6Po9TylsZS8baBJsq9jqMO",
             "name": "Split String",
-            "title": "Split String",
+            "title": "Split Logs By Semicolon",
             "type": "core.splitstring",
             "base_type": "activity",
             "properties": {
@@ -412,7 +412,7 @@
                 }
               ],
               "continue_on_failure": false,
-              "display_name": "Split String",
+              "display_name": "Split Logs By Semicolon",
               "input_string": "$activity.definition_activity_01KVE2DU1NYGZ7XbFKiqRH9PqVeh60vBvLY.output.script_queries.output_str$",
               "remove_empty": true,
               "skip_execution": false
@@ -422,12 +422,12 @@
           {
             "unique_name": "definition_activity_01KVE08U5O4PU5ikFz3SzI8XzoNpZmTA6cH",
             "name": "For Each",
-            "title": "For Each",
+            "title": "For Each Activity To Be Logged",
             "type": "logic.for_each",
             "base_type": "activity",
             "properties": {
               "continue_on_failure": false,
-              "display_name": "For Each",
+              "display_name": "For Each Activity To Be Logged",
               "skip_execution": false,
               "source_array": "$activity.definition_activity_01KVE08KPHLJH6Po9TylsZS8baBJsq9jqMO.output.parts$"
             },
@@ -436,12 +436,12 @@
               {
                 "unique_name": "definition_activity_01KVG6AXQC4K85ryfTpA5W3mZpNXraOrcNS",
                 "name": "Match Regex",
-                "title": "Match Regex",
+                "title": "Match Regexes To Separate  Log, Status and Activity Id",
                 "type": "core.matchregex",
                 "base_type": "activity",
                 "properties": {
                   "continue_on_failure": false,
-                  "display_name": "Match Regex",
+                  "display_name": "Match Regexes To Separate  Log, Status and Activity Id",
                   "input_regex": "([A-Za-z0-9\\s]*),([-:_A-Za-z0-9/\\s]*),([A-Za-z0-9\\s]*)",
                   "input_string": "$activity.definition_activity_01KVE08U5O4PU5ikFz3SzI8XzoNpZmTA6cH.input.source_array[@]$",
                   "skip_execution": false
@@ -451,12 +451,12 @@
               {
                 "unique_name": "definition_activity_01KVHNQZB5OHC5KNXEeRJOliHYcSvSPMTS0",
                 "name": "Replace String",
-                "title": "Replace String",
+                "title": "Remove Square Brackets From Response",
                 "type": "core.replacestring",
                 "base_type": "activity",
                 "properties": {
                   "continue_on_failure": false,
-                  "display_name": "Replace String",
+                  "display_name": "Remove Square Brackets From Response",
                   "input_string": "$activity.definition_activity_01KVG6AXQC4K85ryfTpA5W3mZpNXraOrcNS.output.match_groups$",
                   "replace_list": [
                     {
@@ -475,13 +475,13 @@
               {
                 "unique_name": "definition_activity_01KVHIROMW1QW7jCyQcpqNUv2pQ9F7tuqYQ",
                 "name": "JSONPath Query",
-                "title": "JSONPath Query",
+                "title": "Fetch Activity Id, Activity Name and Status ",
                 "type": "corejava.jsonpathquery",
                 "base_type": "activity",
                 "properties": {
                   "action_timeout": 180,
                   "continue_on_failure": false,
-                  "display_name": "JSONPath Query",
+                  "display_name": "Fetch Activity Id, Activity Name and Status ",
                   "input_json": "$activity.definition_activity_01KVHNQZB5OHC5KNXEeRJOliHYcSvSPMTS0.output.result_string$",
                   "jsonpath_queries": [
                     {
@@ -507,12 +507,12 @@
               {
                 "unique_name": "definition_activity_01KVHPR9NYVDC4JQYEf6FhvuyekCZI5bP5L",
                 "name": "Set Variables",
-                "title": "Set Variables",
+                "title": "Set Activity Name, Activity Id and State",
                 "type": "core.set_multiple_variables",
                 "base_type": "activity",
                 "properties": {
                   "continue_on_failure": false,
-                  "display_name": "Set Variables",
+                  "display_name": "Set Activity Name, Activity Id and State",
                   "skip_execution": false,
                   "variables_to_update": [
                     {
@@ -573,13 +573,13 @@
                       {
                         "unique_name": "definition_activity_01L24ZWPNKNTX0pBpXMMqe3S51bEV3NJxIh",
                         "name": "Select from Table",
-                        "title": "Select from Table",
+                        "title": "Check If Activity Already Logged",
                         "type": "core.selectfromtable",
                         "base_type": "activity",
                         "properties": {
                           "action_timeout": 180,
                           "continue_on_failure": false,
-                          "display_name": "Select from Table",
+                          "display_name": "Check If Activity Already Logged",
                           "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
                           "number_of_rows": {
                             "at_most": true,
@@ -642,7 +642,7 @@
                                   {
                                     "unique_name": "definition_activity_01R6P0RX3GRE1090bWJ1Pwv3wxVY7w3vbQ9",
                                     "name": "Condition Branch",
-                                    "title": "Condition Branch",
+                                    "title": "Custom Log Message Not Present",
                                     "type": "logic.condition_block",
                                     "base_type": "activity",
                                     "properties": {
@@ -652,7 +652,7 @@
                                         "right_operand": ""
                                       },
                                       "continue_on_failure": false,
-                                      "display_name": "Condition Branch",
+                                      "display_name": "Custom Log Message Not Present",
                                       "skip_execution": false
                                     },
                                     "object_type": "definition_activity",
@@ -660,13 +660,13 @@
                                       {
                                         "unique_name": "definition_activity_01L25319H44CV4gzKSeC1ljfCcg66QU6fV2",
                                         "name": "Add Row to Table",
-                                        "title": "Add Row to Table",
+                                        "title": "Add Log to Table",
                                         "type": "core.addrowtotable",
                                         "base_type": "activity",
                                         "properties": {
                                           "action_timeout": 180,
                                           "continue_on_failure": false,
-                                          "display_name": "Add Row to Table",
+                                          "display_name": "Add Log to Table",
                                           "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
                                           "row": [
                                             {
@@ -709,7 +709,7 @@
                                   {
                                     "unique_name": "definition_activity_01R6P0RXUYFDW6j7sbt8XGdudKIZaxcEIXT",
                                     "name": "Condition Branch",
-                                    "title": "Condition Branch",
+                                    "title": "Custom Log Message Present",
                                     "type": "logic.condition_block",
                                     "base_type": "activity",
                                     "properties": {
@@ -719,7 +719,7 @@
                                         "right_operand": ""
                                       },
                                       "continue_on_failure": false,
-                                      "display_name": "Condition Branch",
+                                      "display_name": "Custom Log Message Present",
                                       "skip_execution": false
                                     },
                                     "object_type": "definition_activity",
@@ -727,13 +727,13 @@
                                       {
                                         "unique_name": "definition_activity_01R6P14JSWH0V0wnhjwczON9megp2l2ZHSI",
                                         "name": "Add Row to Table",
-                                        "title": "Add Row to Table",
+                                        "title": "Add Log to Table",
                                         "type": "core.addrowtotable",
                                         "base_type": "activity",
                                         "properties": {
                                           "action_timeout": 180,
                                           "continue_on_failure": false,
-                                          "display_name": "Add Row to Table",
+                                          "display_name": "Add Log to Table",
                                           "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
                                           "row": [
                                             {
@@ -1226,21 +1226,6 @@
       "display_name": "Logging Table Data Type With State",
       "columns": [
         {
-          "name": "log",
-          "title": "Log",
-          "type": "string"
-        },
-        {
-          "name": "status",
-          "title": "State",
-          "type": "string"
-        },
-        {
-          "name": "timestamp",
-          "title": "Timestamp",
-          "type": "string"
-        },
-        {
           "name": "activity_id",
           "title": "Activity ID",
           "type": "string"
@@ -1253,6 +1238,21 @@
         {
           "name": "instance_id",
           "title": "Instance ID",
+          "type": "string"
+        },
+        {
+          "name": "log",
+          "title": "Log",
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "title": "State",
+          "type": "string"
+        },
+        {
+          "name": "timestamp",
+          "title": "Timestamp",
           "type": "string"
         }
       ],
