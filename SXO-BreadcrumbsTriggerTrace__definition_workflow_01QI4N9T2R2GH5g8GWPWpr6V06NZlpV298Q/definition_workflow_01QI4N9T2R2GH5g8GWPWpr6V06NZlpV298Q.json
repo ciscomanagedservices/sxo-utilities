@@ -1,0 +1,1049 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q",
+    "name": "Breadcrumbs - Trigger Trace",
+    "title": "Breadcrumbs - Trigger Trace",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Instance To Be Searched",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01QPPS6YZI4IO4CUDyYHa7s0fnNyMEawawn",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Trace Output",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01QPHIBA54VOH2ryJSw1kuWiDOt5kOgZ8KA",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Timestamp Outputs",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01QPQN6LN2Z8Q1VGwGMibTAvP7Y9vnQRcTi",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "Where Clause",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01QZV2VBB7GFS5Z8wWoDRXLG5gll9JlnaUM",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Alt ID To Be Searched",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01QPHFYPD3AV13JGaZVsouccZEXKRidVB84",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "description": "This workflow works in conjunction with the 'Breadcrumbs - Logging Block' Atomic Action available here: https://github.com/ciscomanagedservices/sxo-utilities\n\nThis workflow can be triggered externally via REST or via a Webhook event (as long as inputs are supplied) and returns the progress between two consecutive breadcrumbs in a given workflow identifiable by a unique ID available in the \"All My Breadcrumbs\" table.",
+      "display_name": "Breadcrumbs - Trigger Trace",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "no_target": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01QPPSA5ZK91C3Q3C8yeEO9eKdPKKegtSqk",
+        "name": "Condition Block",
+        "title": "Check If Instance Id or Alt Id Is Present",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Check If Instance Id or Alt Id Is Present",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_01QPPSACFFF7D6i9ovQJz906qbVrCv20ipM",
+            "name": "Condition Branch",
+            "title": "Alt Id Present",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.input.variable_workflow_01QPHFYPD3AV13JGaZVsouccZEXKRidVB84$",
+                "operator": "ne",
+                "right_operand": ""
+              },
+              "continue_on_failure": false,
+              "display_name": "Alt Id Present",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01QPPTYCWI8025bAKQJuwrNowzKVPUN23YS",
+                "name": "Select from Table",
+                "title": "Find All Matching Ids",
+                "type": "core.selectfromtable",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "columns": [
+                    {
+                      "column_name": "alt_instance_id",
+                      "column_type": "string"
+                    }
+                  ],
+                  "continue_on_failure": false,
+                  "display_name": "Find All Matching Ids",
+                  "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
+                  "number_of_rows": {
+                    "all_rows": true
+                  },
+                  "persist_output": false,
+                  "skip_execution": false,
+                  "sorting": {
+                    "no_sort": true
+                  },
+                  "where_clause": "alt_instance_id LIKE '%$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.input.variable_workflow_01QPHFYPD3AV13JGaZVsouccZEXKRidVB84$%'"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01QPPY8GBBLHY0Nkt4xrOXXOZwVJghY2Dqq",
+                "name": "Select from Table",
+                "title": "Find All Unique Instance Ids",
+                "type": "core.selectfromtable",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "columns": [
+                    {
+                      "column_name": "alt_instance_id",
+                      "column_type": "string"
+                    }
+                  ],
+                  "continue_on_failure": false,
+                  "display_name": "Find All Unique Instance Ids",
+                  "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
+                  "number_of_rows": {
+                    "all_rows": true
+                  },
+                  "persist_output": true,
+                  "skip_execution": false,
+                  "sorting": {
+                    "no_sort": true
+                  },
+                  "where_clause": "alt_instance_id LIKE '%$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.input.variable_workflow_01QPHFYPD3AV13JGaZVsouccZEXKRidVB84$%'"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01QVNOE2APKSB4Fm0bMo9ATmz6TE9bCF4lQ",
+                "name": "Set Variables",
+                "title": "Set Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set Variables",
+                  "skip_execution": true,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.output.variable_workflow_01QPHIBA54VOH2ryJSw1kuWiDOt5kOgZ8KA$",
+                      "variable_value_new": "$activity.definition_activity_01QPPY8GBBLHY0Nkt4xrOXXOZwVJghY2Dqq.output.response_body$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01QPQ060FPHEA5zziUceFFduAKaTe91kZfb",
+                "name": "Execute Python Script",
+                "title": "Execute Python Script",
+                "type": "python3.script",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Execute Python Script",
+                  "script": "import json\nd = $activity.definition_activity_01QPPY8GBBLHY0Nkt4xrOXXOZwVJghY2Dqq.output.response_body$\ninstance_ids = []\nfor instance in d:\n  if instance['alt_instance_id'] not in instance_ids:\n    instance_ids.append(instance['alt_instance_id'])\nsingle_instance = (len(instance_ids) == 1)",
+                  "script_queries": [
+                    {
+                      "script_query": "instance_ids",
+                      "script_query_name": "Unique Instance Ids",
+                      "script_query_type": "string"
+                    },
+                    {
+                      "script_query": "single_instance",
+                      "script_query_name": "Single Instance",
+                      "script_query_type": "boolean"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01QZUGZVK5ITL0qyfQB5QdvdTIyFE0OsvrO",
+                "name": "Group",
+                "title": "Clean Up List Output",
+                "type": "logic.group",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Clean Up List Output",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_01QZUH02XNIJU3BSTyr4V0Vsk0yYFBqwlFz",
+                    "name": "Replace String",
+                    "title": "Replace String",
+                    "type": "core.replacestring",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "display_name": "Replace String",
+                      "input_string": "$activity.definition_activity_01QPQ060FPHEA5zziUceFFduAKaTe91kZfb.output.script_queries.Unique Instance Ids$",
+                      "replace_list": [
+                        {
+                          "replaced_string": "[",
+                          "replacement_string": ""
+                        },
+                        {
+                          "replaced_string": "]",
+                          "replacement_string": ""
+                        }
+                      ],
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_01QZUH06B6OK20ycfdIcFD61mvdSVgbzM0J",
+                    "name": "Split String",
+                    "title": "Split String",
+                    "type": "core.splitstring",
+                    "base_type": "activity",
+                    "properties": {
+                      "boundaries": [
+                        {
+                          "boundary": ","
+                        }
+                      ],
+                      "continue_on_failure": false,
+                      "display_name": "Split String",
+                      "input_string": "$activity.definition_activity_01QZUH02XNIJU3BSTyr4V0Vsk0yYFBqwlFz.output.result_string$",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_01QZV2ZS9ZNNG5EEYdrniKmyrKOQtxcVkL2",
+                "name": "For Each",
+                "title": "For Each",
+                "type": "logic.for_each",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "For Each",
+                  "skip_execution": false,
+                  "source_array": "$activity.definition_activity_01QZUH06B6OK20ycfdIcFD61mvdSVgbzM0J.output.parts$"
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_01QZV3A70FRJN7gevRb48VAjxZHW0jrBJLP",
+                    "name": "Set Variables",
+                    "title": "Set Variables",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "display_name": "Set Variables",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.local.variable_workflow_01QZV2VBB7GFS5Z8wWoDRXLG5gll9JlnaUM$",
+                          "variable_value_new": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.local.variable_workflow_01QZV2VBB7GFS5Z8wWoDRXLG5gll9JlnaUM$ OR alt_instance_id=$activity.definition_activity_01QZV2ZS9ZNNG5EEYdrniKmyrKOQtxcVkL2.input.source_array[@]$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_01QZV4K5VTL0C4nFGvYTcKN7KUuOexV48nI",
+                "name": "Substring",
+                "title": "Substring",
+                "type": "core.substring",
+                "base_type": "activity",
+                "properties": {
+                  "begin": 3,
+                  "continue_on_failure": false,
+                  "display_name": "Substring",
+                  "skip_execution": false,
+                  "source": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.local.variable_workflow_01QZV2VBB7GFS5Z8wWoDRXLG5gll9JlnaUM$"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01QZUGVARD49G0dBI6QHXOFy54Z818k2qTr",
+                "name": "Select from Table",
+                "title": "Select from Table",
+                "type": "core.selectfromtable",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Select from Table",
+                  "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
+                  "number_of_rows": {
+                    "all_rows": true
+                  },
+                  "persist_output": false,
+                  "skip_execution": false,
+                  "sorting": {
+                    "no_sort": true
+                  },
+                  "where_clause": "$activity.definition_activity_01QZV4K5VTL0C4nFGvYTcKN7KUuOexV48nI.output.substring$"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01R01T96RJCHH5PjacqoRQmRxqBzXnvVNQ9",
+                "name": "Execute Python Script",
+                "title": "Execute Python Script",
+                "type": "python3.script",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Execute Python Script",
+                  "script": "d = $activity.definition_activity_01QZUGVARD49G0dBI6QHXOFy54Z818k2qTr.output.response_body$\noutput_json = {}\nfor row in d:\n  try:\n    output_json[row['alt_instance_id']].append(row)\n  except:\n    output_json[row['alt_instance_id']] = [row]\nprint(output_json)\n  ",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_01QPPSAD1GHL41hontRjwCptGAd8qnueESM",
+            "name": "Condition Branch",
+            "title": "Instance ID Present",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.input.variable_workflow_01QPPS6YZI4IO4CUDyYHa7s0fnNyMEawawn$",
+                "operator": "ne",
+                "right_operand": ""
+              },
+              "continue_on_failure": false,
+              "display_name": "Instance ID Present",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01QPPXFLYF3GV03ZikBM2xlxraKqA8nZbfo",
+                "name": "Select from Table",
+                "title": "Find All Matching Ids",
+                "type": "core.selectfromtable",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "columns": [
+                    {
+                      "column_name": "instance_id",
+                      "column_type": "string"
+                    }
+                  ],
+                  "continue_on_failure": false,
+                  "display_name": "Find All Matching Ids",
+                  "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
+                  "number_of_rows": {
+                    "all_rows": true
+                  },
+                  "persist_output": false,
+                  "skip_execution": false,
+                  "sorting": {
+                    "no_sort": true
+                  },
+                  "where_clause": "instance_id LIKE '%$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.input.variable_workflow_01QPHFYPD3AV13JGaZVsouccZEXKRidVB84$%'"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01QVNM2YC0LA847LsESNsjAFl2BrKxOtVQa",
+                "name": "Select from Table",
+                "title": "Find All Unique Instance Ids",
+                "type": "core.selectfromtable",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "columns": [
+                    {
+                      "column_name": "instance_id",
+                      "column_type": "string"
+                    }
+                  ],
+                  "continue_on_failure": false,
+                  "display_name": "Find All Unique Instance Ids",
+                  "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
+                  "number_of_rows": {
+                    "all_rows": true
+                  },
+                  "persist_output": false,
+                  "skip_execution": false,
+                  "sorting": {
+                    "no_sort": true
+                  },
+                  "where_clause": "instance_id LIKE '%$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.input.variable_workflow_01QPPS6YZI4IO4CUDyYHa7s0fnNyMEawawn$%'"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01QPHIDJY645D2QKc7wcvC6Ce3Sl10zaUdO",
+                "name": "Set Variables",
+                "title": "Set Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set Variables",
+                  "skip_execution": true,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.output.variable_workflow_01QPHIBA54VOH2ryJSw1kuWiDOt5kOgZ8KA$",
+                      "variable_value_new": "$activity.definition_activity_01QVNM2YC0LA847LsESNsjAFl2BrKxOtVQa.output.response_body$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01QVNPFK2XHWF7VdJtPcgn3NztbVLyxMIET",
+                "name": "Execute Python Script",
+                "title": "Execute Python Script",
+                "type": "python3.script",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Execute Python Script",
+                  "script": "import json\nd = $activity.definition_activity_01QVNM2YC0LA847LsESNsjAFl2BrKxOtVQa.output.response_body$\ninstance_ids = []\nfor instance in d:\n  if instance['instance_id'] not in instance_ids:\n    instance_ids.append(instance['instance_id'])\nsingle_instance = (len(instance_ids) == 1)",
+                  "script_queries": [
+                    {
+                      "script_query": "instance_ids",
+                      "script_query_name": "Unique Instance Ids",
+                      "script_query_type": "string"
+                    },
+                    {
+                      "script_query": "single_instance",
+                      "script_query_name": "Single Instance",
+                      "script_query_type": "boolean"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01R0MFYO8IDU25C5F0vjV5PW3vdkV9X74pG",
+                "name": "Group",
+                "title": "Clean Up List Output",
+                "type": "logic.group",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Clean Up List Output",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_01R0MFYVMZDPK2aAkk27Qq6ByFQOKsAPxfv",
+                    "name": "Replace String",
+                    "title": "Replace String",
+                    "type": "core.replacestring",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "display_name": "Replace String",
+                      "input_string": "$activity.definition_activity_01QVNPFK2XHWF7VdJtPcgn3NztbVLyxMIET.output.script_queries.Unique Instance Ids$",
+                      "replace_list": [
+                        {
+                          "replaced_string": "[",
+                          "replacement_string": ""
+                        },
+                        {
+                          "replaced_string": "]",
+                          "replacement_string": ""
+                        }
+                      ],
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_01R0MFYYYCG9Y0IykUDeRtwPgwOreUohGnv",
+                    "name": "Split String",
+                    "title": "Split String",
+                    "type": "core.splitstring",
+                    "base_type": "activity",
+                    "properties": {
+                      "boundaries": [
+                        {
+                          "boundary": ","
+                        }
+                      ],
+                      "continue_on_failure": false,
+                      "display_name": "Split String",
+                      "input_string": "$activity.definition_activity_01R0MFYVMZDPK2aAkk27Qq6ByFQOKsAPxfv.output.result_string$",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_01R0MG5DT60713tMJ5igvcEHyjOkimP8fNP",
+                "name": "For Each",
+                "title": "For Each",
+                "type": "logic.for_each",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "For Each",
+                  "skip_execution": false,
+                  "source_array": "$activity.definition_activity_01R0MFYYYCG9Y0IykUDeRtwPgwOreUohGnv.output.parts$"
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_01R0MG5L2QW5N5xmaMfF6c2vbNsbIXeGtey",
+                    "name": "Set Variables",
+                    "title": "Set Variables",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "display_name": "Set Variables",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.local.variable_workflow_01QZV2VBB7GFS5Z8wWoDRXLG5gll9JlnaUM$",
+                          "variable_value_new": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.local.variable_workflow_01QZV2VBB7GFS5Z8wWoDRXLG5gll9JlnaUM$ OR instance_id=$activity.definition_activity_01R0MG5DT60713tMJ5igvcEHyjOkimP8fNP.input.source_array[@]$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_01R0MG9P0APJE1fCfaBLVh9LCQXZiQJUvcC",
+                "name": "Substring",
+                "title": "Substring",
+                "type": "core.substring",
+                "base_type": "activity",
+                "properties": {
+                  "begin": 3,
+                  "continue_on_failure": false,
+                  "display_name": "Substring",
+                  "skip_execution": false,
+                  "source": "$workflow.definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q.local.variable_workflow_01QZV2VBB7GFS5Z8wWoDRXLG5gll9JlnaUM$"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01R0MGD880CMN14Pkx8M4Bv9izPIC2pzcGQ",
+                "name": "Select from Table",
+                "title": "Select from Table",
+                "type": "core.selectfromtable",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Select from Table",
+                  "input_table": "$global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA.global.variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA$",
+                  "number_of_rows": {
+                    "all_rows": true
+                  },
+                  "persist_output": false,
+                  "skip_execution": false,
+                  "sorting": {
+                    "no_sort": true
+                  },
+                  "where_clause": "$activity.definition_activity_01R0MG9P0APJE1fCfaBLVh9LCQXZiQJUvcC.output.substring$"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01R0MGG0EL1HY4cmaBkyk2HW6hejy8YzRYQ",
+                "name": "Execute Python Script",
+                "title": "Execute Python Script",
+                "type": "python3.script",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Execute Python Script",
+                  "script": "d = $activity.definition_activity_01R0MGD880CMN14Pkx8M4Bv9izPIC2pzcGQ.output.response_body$\noutput_json = {}\nfor row in d:\n  try:\n    output_json[row['alt_instance_id']].append(row)\n  except:\n    output_json[row['alt_instance_id']] = [row]\nprint(output_json)\n  ",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_01EI33LMFFL7N5eTQLsOOJIrxdlSOHb7r3r"
+    ]
+  },
+  "categories": {
+    "category_01EI33LMFFL7N5eTQLsOOJIrxdlSOHb7r3r": {
+      "unique_name": "category_01EI33LMFFL7N5eTQLsOOJIrxdlSOHb7r3r",
+      "name": "SecureX",
+      "title": "SecureX",
+      "type": "basic.category",
+      "base_type": "category",
+      "category_type": "custom",
+      "object_type": "category"
+    }
+  },
+  "variables": {
+    "variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA": {
+      "unique_name": "variable_01R6OPSYXP6I268JueCTv9RrAviXKWojCzA",
+      "schema_id": "tabletype_01R6ONM68O92N42kFVHtGLcZnuEHE4rEEOj",
+      "properties": {
+        "value": [
+          {
+            "column_data": {
+              "activity_id": "test",
+              "alt_instance_id": "test",
+              "instance_id": "test",
+              "log": "test",
+              "status": "test",
+              "timestamp": "test"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6P1Z099UWZ6N4Q1ABIJEYBlyyYenuJN1",
+              "alt_instance_id": "BC Test WF - 2021-09-07T12:33:43.801739272Z",
+              "instance_id": "01R6P1Z07UM3D0W5YUH2VgLYquoylpvGPAz",
+              "log": "Split Input String by space",
+              "status": "success",
+              "timestamp": "2021-09-07T12:33:44.056072029Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6P1Z1H2UND66qU9ClsIDNCfGhtYo84XQ",
+              "alt_instance_id": "BC Test WF - 2021-09-07T12:33:43.801739272Z",
+              "instance_id": "01R6P1Z07UM3D0W5YUH2VgLYquoylpvGPAz",
+              "log": "Substring",
+              "status": "success",
+              "timestamp": "2021-09-07T12:33:46.589728851Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6P1Z1XCNFF3RqeMtgyTG7aRgOoxer8lq",
+              "alt_instance_id": "BC Test WF - 2021-09-07T12:33:43.801739272Z",
+              "instance_id": "01R6P1Z07UM3D0W5YUH2VgLYquoylpvGPAz",
+              "log": "To Upper",
+              "status": "success",
+              "timestamp": "2021-09-07T12:33:50.851721518Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6P1Z2WTIW62mf2LpswWWsOUbuNvWR06R",
+              "alt_instance_id": "BC Test WF - 2021-09-07T12:33:43.801739272Z",
+              "instance_id": "01R6P1Z07UM3D0W5YUH2VgLYquoylpvGPAz",
+              "log": "Call Webex API",
+              "status": "failed",
+              "timestamp": "2021-09-07T12:33:55.087508743Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6P6CNHUTVH37gDV8tAHMrfutBSxshiMq",
+              "alt_instance_id": "BC Test WF - 2021-09-07T12:39:26.968698405Z",
+              "instance_id": "01R6P6CNDSWGG4jtoHV6hdYmxJWwUKA27T7",
+              "log": "Split Input String by space - This def works",
+              "status": "success",
+              "timestamp": "2021-09-07T12:39:27.262626549Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6P6CP07KX90hOjnYxnvVhY67xI24qr8L",
+              "alt_instance_id": "BC Test WF - 2021-09-07T12:39:26.968698405Z",
+              "instance_id": "01R6P6CNDSWGG4jtoHV6hdYmxJWwUKA27T7",
+              "log": "Substring - Does this work",
+              "status": "success",
+              "timestamp": "2021-09-07T12:39:30.052767553Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6P6CPBXRYT2A4zawzOF1NCEgH2EEtidw",
+              "alt_instance_id": "BC Test WF - 2021-09-07T12:39:26.968698405Z",
+              "instance_id": "01R6P6CNDSWGG4jtoHV6hdYmxJWwUKA27T7",
+              "log": "To Upper - This too thank you",
+              "status": "success",
+              "timestamp": "2021-09-07T12:39:34.350536055Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6P6CQ48RDE2kJ2j1bzUItVWnEoYjLWTw",
+              "alt_instance_id": "BC Test WF - 2021-09-07T12:39:26.968698405Z",
+              "instance_id": "01R6P6CNDSWGG4jtoHV6hdYmxJWwUKA27T7",
+              "log": "Call Webex API - This one should have a custom message",
+              "status": "failed",
+              "timestamp": "2021-09-07T12:39:38.622743086Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q1HOL3HIZ43FNpt67mA3ktwHSVBf1n0",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
+              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
+              "log": "Split Input String by space - This def works",
+              "status": "success",
+              "timestamp": "2021-09-07T13:20:07.362833758Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q1HPJ3DG26hXdSC7mMyzpOvhkCEh2AZ",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
+              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
+              "log": "Substring - Does this work",
+              "status": "success",
+              "timestamp": "2021-09-07T13:20:10.167770089Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q1HP7P9OU611xrmoiEdQD9r9IlWRyjg",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
+              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
+              "log": "For Each Part - This too thank you",
+              "status": "success",
+              "timestamp": "2021-09-07T13:20:15.372921229Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q1HPT55WP2KvURtncUEbULk0DD1HRu8",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
+              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
+              "log": "To Upper - This too thank you",
+              "status": "success",
+              "timestamp": "2021-09-07T13:20:15.372921229Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q1HPGGLYU4TjmsKtHte13ZsJASgmxrW",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
+              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
+              "log": "Parallel Outside Loop - Cmon Gimme A Message",
+              "status": "success",
+              "timestamp": "2021-09-07T13:20:19.375591455Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q1HQHX2I23VdYnhfgH9KR0fS2tJeGu7",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
+              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
+              "log": "Call Webex API - This one should have a custom message",
+              "status": "failed",
+              "timestamp": "2021-09-07T13:20:23.770952818Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q1HQ798HC3DpHKTS2ABM79yxwI1Uji0",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
+              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
+              "log": "Conditional On Input - Ideally this should have one as well",
+              "status": "success",
+              "timestamp": "2021-09-07T13:20:33.200459221Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q1HQFCLVT1ovSBWa1udPNltpDirdtVy",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
+              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
+              "log": "Sleep it off - Ideally this should have one as well",
+              "status": "success",
+              "timestamp": "2021-09-07T13:20:33.200459221Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q5ZDZXYER3YxdqH3QyfbHSzNePp3YhW",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
+              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
+              "log": "Split Input String by space - This def works",
+              "status": "success",
+              "timestamp": "2021-09-07T13:25:59.471530544Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q5ZFKE3XH0wmLnKqamzPeSuVL50cMkk",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
+              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
+              "log": "Substring - Does this work",
+              "status": "success",
+              "timestamp": "2021-09-07T13:26:02.302168933Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q5ZEUL1074X79OnYzkjg6pHtZMZuoIV",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
+              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
+              "log": "For Each Part - This too thank you",
+              "status": "success",
+              "timestamp": "2021-09-07T13:26:25.575679835Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q5ZG1190L0wGJ23NCslePQtvr39MvEI",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
+              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
+              "log": "To Upper - This too thank you",
+              "status": "success",
+              "timestamp": "2021-09-07T13:26:25.575679835Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q5ZFCOQZ721TMHqoE3jauYT9z0znEyK",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
+              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
+              "log": "Parallel Outside Loop - Cmon Gimme A Message",
+              "status": "success",
+              "timestamp": "2021-09-07T13:26:30.077314882Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q5ZHA9XSO1VLIKl76KnC2nbRFTfAHxv",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
+              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
+              "log": "Call Webex API - This one should have a custom message",
+              "status": "failed",
+              "timestamp": "2021-09-07T13:26:34.772329313Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q5ZGOSIO56pBVucFOREIVocN4AfofHr",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
+              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
+              "log": "Conditional On Input - Ideally this should have one as well",
+              "status": "success",
+              "timestamp": "2021-09-07T13:26:44.617846566Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q5ZH3YYXO7LMaP8paGiPBjCVTlBl69t",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
+              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
+              "log": "Sleep it off - Ideally this should have one as well",
+              "status": "success",
+              "timestamp": "2021-09-07T13:26:44.617846566Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q9TYCD08E5wf2oPAxk9PL2dqJdPdjBn",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
+              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
+              "log": "Split Input String by space - This def works",
+              "status": "success",
+              "timestamp": "2021-09-07T13:31:01.011178136Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q9TZFU8N653n0vdLDreJdMHcb6ouR2e",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
+              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
+              "log": "Substring - Does this work",
+              "status": "success",
+              "timestamp": "2021-09-07T13:31:03.709897938Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q9TZ1RKBO4VE8en8em0ZL0ZKHSkSLi9",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
+              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
+              "log": "For Each Part - This too thank you",
+              "status": "success",
+              "timestamp": "2021-09-07T13:31:08.273078374Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q9TZRO2SS6OgM2hxOa3GglbuKarbDoe",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
+              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
+              "log": "To Upper - This too thank you",
+              "status": "success",
+              "timestamp": "2021-09-07T13:31:08.273078374Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q9TZCPCNM1869QIvKebHupkmQyRusKJ",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
+              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
+              "log": "Parallel Outside Loop - Cmon Gimme A Message",
+              "status": "success",
+              "timestamp": "2021-09-07T13:31:12.139615833Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q9U0JFC6D728sbb4LvvGXQ1zl9fMbMJ",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
+              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
+              "log": "Call Webex API - This one should have a custom message",
+              "status": "failed",
+              "timestamp": "2021-09-07T13:31:14.834910886Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q9U07EUL24sys4adHXborR4QGCOZL8B",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
+              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
+              "log": "Conditional On Input - Ideally this should have one as well",
+              "status": "success",
+              "timestamp": "2021-09-07T13:31:22.438462232Z"
+            }
+          },
+          {
+            "column_data": {
+              "activity_id": "01R6Q9U0GGLNL6eUmsQGkFCyVJgXcaLgx9I",
+              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
+              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
+              "log": "Sleep it off - Ideally this should have one as well",
+              "status": "success",
+              "timestamp": "2021-09-07T13:31:22.438462232Z"
+            }
+          }
+        ],
+        "scope": "global",
+        "name": "All My Breadcrumbs",
+        "type": "datatype.table",
+        "is_required": false,
+        "is_invisible": false
+      },
+      "object_type": "variable"
+    }
+  },
+  "table_types": {
+    "tabletype_01R6ONM68O92N42kFVHtGLcZnuEHE4rEEOj": {
+      "unique_name": "tabletype_01R6ONM68O92N42kFVHtGLcZnuEHE4rEEOj",
+      "data_type": "datatype.tabletype",
+      "display_name": "Logging Table Data Type With State",
+      "columns": [
+        {
+          "name": "log",
+          "title": "Log",
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "title": "State",
+          "type": "string"
+        },
+        {
+          "name": "timestamp",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        {
+          "name": "activity_id",
+          "title": "Activity ID",
+          "type": "string"
+        },
+        {
+          "name": "alt_instance_id",
+          "title": "Alternative Instance ID",
+          "type": "string"
+        },
+        {
+          "name": "instance_id",
+          "title": "Instance ID",
+          "type": "string"
+        }
+      ],
+      "base_type": "datatype",
+      "object_type": "tabletype"
+    }
+  }
+}
