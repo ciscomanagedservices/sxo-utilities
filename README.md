@@ -51,6 +51,80 @@ Please refer to descriptions provided within the atomic actions/workflows for ad
     <br>💡 **Pro Tip:** Oversight can also monitor triggers attached to your workflow and invoke your error handler if the trigger status is not in `Started-polling`.
 
     </details>
+    
+    <details>
+        
+    <summary><strong>Breadcrumbs (Logging & Tracing Framework) [<a href="/SXO-BreadcrumbsLoggingBlock__definition_workflow_01KT1XNI3HHD76eXrxg4GfbATOyZdxTjyLL/">logging workflow</a>] [<a href="/SXO-BreadcrumbsTriggerTrace__definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q/">tracing workflow</a>]</strong></summary>
+
+    <br>Breadcrumbs lets you add checkpoints to your SecureX Orchestrator (SXO) workflows that you can then use to track progress in near real-time or retrospectively via external systems. This can be specially useful as a stack trace for error/exception handling. 
+
+    NOTE: Breadcrumbs relies on a SecureX API Client with the 'AO' API scope.
+
+    In this repository, there are **two** workflows related to Breadcrumbs:
+    1. **Breadcrumbs - Logging Block** [[link](/SXO-BreadcrumbsLoggingBlock__definition_workflow_01KT1XNI3HHD76eXrxg4GfbATOyZdxTjyLL/)]
+    <br>Place this workflow strategically in multiple 'checkpoints' of your parent workflow and Breadcrumbs will store all progress between two consecutive logging blocks in a table data type named `All My Breadcrumbs`.
+
+        **Steps to use:**
+        1. Import the workflow to your SXO Org. Ensure you have the `CTR Admin` target in your Org setup that [this](/SXO-GenerateAPIToken__definition_workflow_01NILYC8ELB2P35zuxiTzIZA63s12AUnVjL/) workflow uses to pass a valid SXO JWT token to Breadcrumbs.
+        2. This atomic action creates a Global Variable table named `All My Breadcrumbs` to log to. The table has the following columns:
+            1. `Alternate Instance ID`: A friendly name that you provide to make it easier for you to identify & retrieve data for your workflow instance. This name can also have run time variables.
+            2. `Instance ID`: The instance or 'run' identifier of the workflow.
+            3. `Activity ID`: An identifier for each activity or block in your workflow between two consecutive Breadcrumbs.
+            4. `Log`: The name of the activity with any custom log messsage. The custom log message can also have run time variables.
+            5. `State`: Activity Status (success/error)
+            6. `Timestamp`: Activity timestamp in YYYY-MM-DDThh:mm:ss.sssZ format
+        3. Drop this workflow (it should be visible under the 'workflows' tab in the left pane as `Breadcrumbs - Logging Block`) into your parent workflow wherever you deem appropriate. You're free to drop as many logging blocks as you'd like, however, each block you drop to your workflow adds ~5 seconds (may vary under heavy load) to your workflow execution time.
+
+            > 💡 **Pro Tip:** A best practice is to place a logging block immediately after an activity that involves communicating with an external entity (like a third-party API or database). You can then use the logging block to capture progress or any errors that the third-party returns.
+        4. You'll notice three input variables: an `Instance ID` (required), an `Alternate Instance ID` (optional) & a `Custom Log Message` (optional).
+            1. Populate the `Instance ID` using the Variable Browser > `Workflow` > `Output` > `Instance Id`. 
+            2. A good naming practice for your `Alternate Instance ID` is `<some text that identifies your workflow> - <workflow start time>`. You can dynamically populate the workflow start time using the Variable Browser > `Workflow` > `Output` > `Start time`.
+            3. Whatever you define in the `Custom Log Message` is suffixed to the Activity Name & stored.
+        5. Run the workflow you've added Breadcrumbs to. You should be able to see new entries added to the table now.
+
+    2. **Breadcrumbs - Trigger Trace** [[link](/SXO-BreadcrumbsTriggerTrace__definition_workflow_01QI4N9T2R2GH5g8GWPWpr6V06NZlpV298Q/)]
+    <br>A sample workflow that can be externally triggered via SXO's REST API to trace the breadcrumbs of another workflow from the `All My Breadcrumbs` table & output progress in near real-time or retrospectively.
+
+        **Steps to use:**
+        1. Import the workflow to your SXO Org. 
+        2. Supply an `Instance ID` or an `Alternate Instance ID` as input to this workflow to search for corresponding Breadcrumbs. If you use the `Alternate Instance ID`, you can also provide a _fuzzy_ string to search with, i.e. you do not need to provide an exact match. 
+        3. The output of this workflow is a JSON string with Breadcrumbs corresponding to your search. If there are multiple matches, multiple objects are returned, like:
+
+            ```json
+            {
+                "Sample WF1 - 2021-09-06T08:17:22.928216678Z": [{
+                        "activity_id": "01R5OZ5IQY9CN3x9onnjR7z80wQoYb7ZkPh",
+                        "alt_instance_id": "Sample WF1 - 2021-09-06T08:17:22.928216678Z",
+                        "instance_id": "01R5OZ5IPN8HS5RvvYIcSoQsFhwhxiXjpae",
+                        "log": "Split String",
+                        "state": "success",
+                        "timestamp": "2021-09-06T08:17:23.921234578Z"
+                    }],
+                "Sample WF1 - 2021-09-09T09:10:10.233331678Z": [{
+                    "activity_id": "01R5OZ5IQY9CN3x9onnjR7z80wQoYb7ZkPh",
+                    "alt_instance_id": "Sample WF1 - 2021-09-09T09:10:10.233331678Z",
+                    "instance_id": "01S5O344N8HS5RvvYIcSoQsFh244iXjreq",
+                    "log": "Split String",
+                    "state": "success",
+                    "timestamp": "2021-09-09T09:10:11.232115338Z"
+                }]
+            }
+            ``` 
+
+    **Usage Guidance:**
+
+    1. Since logging blocks are added sequentially to your workflow, you may want to ensure that "Continue Execution on Failure" is checked on your critical activities for a logging block to be able to capture errors that may occur in activities preceeding it.
+    2. A logging block must exist at the same level as the activities it needs to log. For example: placing a logging block just after a conditional block **does not** automatically log all activities inside the conditional - it only logs the conditional's overall state; if you'd like to log activities inside a conditional branch, you need to place one or more logging blocks within that conditional branch.
+    3. For usage in parallel blocks, you must have an active logging block in **one parallel branch only** and 'silent' logging blocks in all other parallel branches within the parallel block. A 'silent' logging block is one that is placed with the "Skip Activity Execution" parameter checked. This prevents the silent block from logging the activities above it, but can still be _seen_ by the subsequent (non-silent or active) logging block as the preceeding logging block.
+    4. The architecture that Breadcrumbs uses is for demonstration purposes. In production, you may want to use a database for more performant logging as opposed to using SXO Table Data Types. We tend to implement one of three methodologies for production projects:
+
+        | Methodology                                                     | Pros                                                                                                                                           | Cons                                                                                                                                                               |
+        |-----------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+        | Log to SXO tables alone                                         | - Quickest write executions for a small number of workflows<br>- Minimal operational overhead                                                  | - Not scalable for concurrent reads/writes, i.e. multiple parent workflows logging breadcrumbs concurrently to a single SXO table.                                                       |
+        | Log to SXO tables as cache, move to a DB for persistent logging on a schedule | - Ideal for large scale workflows that require quick write execution<br>- Benefit from quick writes to SXO tables and performant reads from DB | - Requires an external database<br>- Added overhead to maintain a separate workflow that syncs cache to database                                                   |
+        | Log directly to a DB                                            | - Handle concurrent reads/writes with ease                                                                                                     | - Slowest execution, prolongs workflow run time (recommended for workflows that prioritize reliability over speed of execution)<br>- Requires an external database |
+
+    </details>
 
   ---
   
