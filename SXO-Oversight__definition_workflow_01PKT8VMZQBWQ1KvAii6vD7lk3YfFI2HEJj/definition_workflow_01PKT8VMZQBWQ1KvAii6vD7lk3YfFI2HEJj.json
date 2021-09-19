@@ -1123,7 +1123,7 @@
       "type": "schedule",
       "base_type": "trigger",
       "ref_id": "schedule_01Q67NEQ781TS3oF72xJya8D6rQ0X8bq9w7",
-      "version": "",
+      "version": "1.0.0",
       "disabled": false,
       "unique_name": "triggerschedule_01Q67NJ6O30BA34gGAmc4mb8lknLYBaJW6w",
       "object_type": "triggerschedule"
@@ -1227,23 +1227,9 @@
         "value": [
           {
             "column_data": {
-              "ErrorPattern": ".*",
-              "HandlerWF": "01PU2Q61L3MST0j4tlZcHSCXJG9AHrYBFa8",
-              "WorkflowIds": "01PPZ5HE23GJZ0hDOEgHlKsDJgeo0qVEMTG"
-            }
-          },
-          {
-            "column_data": {
-              "ErrorPattern": "Any Other Error",
-              "HandlerWF": "01PU2Q61L3MST0j4tlZcHSCXJG9AHrYBFa8",
-              "WorkflowIds": "01PPZ5HE23GJZ0hDOEgHlKsDJgeo0qVEMTG"
-            }
-          },
-          {
-            "column_data": {
-              "ErrorPattern": ".*",
-              "HandlerWF": "01PU2Q61L3MST0j4tlZcHSCXJG9AHrYBFa8",
-              "WorkflowIds": "01Q3ETKY8D5605C7gW9j9KSsBEMr54VyjX7"
+              "ErrorPattern": "",
+              "HandlerWF": "",
+              "WorkflowIds": ""
             }
           }
         ],
