@@ -185,7 +185,7 @@
           "action_timeout": 180,
           "continue_on_failure": false,
           "display_name": "Fetch Only Distinct Ids",
-          "script": "import json\nd = json.loads('$activity.definition_activity_01PKW4IK4BO0Y1yq42jWb3SWBdSXzl4neEv.output.jsonpath_queries.Ids$')\nfiltered_ids = list(set(d))",
+          "script": "import json\ntry:\n  d = json.loads('$activity.definition_activity_01PKW4IK4BO0Y1yq42jWb3SWBdSXzl4neEv.output.jsonpath_queries.Ids$')\n  filtered_ids = list(set(d))\nexcept:\n  filtered_ids = ['$activity.definition_activity_01PKW4IK4BO0Y1yq42jWb3SWBdSXzl4neEv.output.jsonpath_queries.Ids$']",
           "script_queries": [
             {
               "script_query": "filtered_ids",
@@ -274,6 +274,54 @@
                   }
                 },
                 "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01RHUNTHUEF875VLT7RNRnLK7V0KoHrKcr9",
+                "name": "Condition Block",
+                "title": "Condition Block",
+                "type": "logic.if_else",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Condition Block",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "blocks": [
+                  {
+                    "unique_name": "definition_activity_01RHUNTOL7CIM7SqkQzW2LWjSQcWNXSYJA6",
+                    "name": "Condition Branch",
+                    "title": "If Triggers Not Present ",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": "$activity.definition_activity_01Q3IWEIZ4F8J2uZT58DDJLVUzYOZIHmAki.output.response_body$",
+                        "operator": "eq",
+                        "right_operand": "[]"
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "If Triggers Not Present ",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_01RHUNXLPK7KK5XqANFvawyAg5sB1n3xSCk",
+                        "name": "Continue",
+                        "title": "Continue",
+                        "type": "logic.continue",
+                        "base_type": "activity",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "display_name": "Continue",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity"
+                      }
+                    ]
+                  }
+                ]
               },
               {
                 "unique_name": "definition_activity_01Q3JL1FTHJF25Mgex6V8mqeLKlfg38WzKr",
@@ -500,7 +548,7 @@
                 "base_type": "activity",
                 "properties": {
                   "action_timeout": 180,
-                  "continue_on_failure": false,
+                  "continue_on_failure": true,
                   "display_name": "Parse All Workflow Instance Ids",
                   "input_json": "$activity.definition_activity_01PKUHRUWGJRR6cAfgAW3kC8Nt9gXUFYAiC.output.response_body$",
                   "jsonpath_queries": [
@@ -518,6 +566,55 @@
                   "skip_execution": false
                 },
                 "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01RJBI4TWNE4X7XTWzM6K2eJAn0Ki2Ql8PW",
+                "name": "Condition Block",
+                "title": "Condition Block",
+                "type": "logic.if_else",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Condition Block",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "blocks": [
+                  {
+                    "unique_name": "definition_activity_01RJBI50JYKVW4sAqtkUWmRWY8hwXvynB6O",
+                    "name": "Condition Branch",
+                    "title": "If No Instances Exist",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": "$activity.definition_activity_01PKT9PILOTG213Ta5z1wyPHxSTDpWcimMF.output.succeeded$",
+                        "operator": "eq",
+                        "right_operand": false
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "If No Instances Exist",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_01RJBKEDPIQ237K389MNq6F0hCzDAeSk3Ns",
+                        "name": "Completed",
+                        "title": "Completed",
+                        "type": "logic.completed",
+                        "base_type": "activity",
+                        "properties": {
+                          "completion_type": "succeeded",
+                          "continue_on_failure": false,
+                          "display_name": "Completed",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity"
+                      }
+                    ]
+                  }
+                ]
               },
               {
                 "unique_name": "definition_activity_01PKXCT0VED8A6z7V4u6qdRoFWcldzzYyZW",
@@ -1227,9 +1324,9 @@
         "value": [
           {
             "column_data": {
-              "ErrorPattern": "",
-              "HandlerWF": "",
-              "WorkflowIds": ""
+              "ErrorPattern": ".*",
+              "HandlerWF": "01RGW22S649OJ3ZSfex1MsXd9ZMDMicZgk0",
+              "WorkflowIds": "01RHRLZA6UUMT6YIfdkHmLVJUurHisYQxAc"
             }
           }
         ],
@@ -1250,11 +1347,6 @@
       "display_name": "Oversight Table",
       "columns": [
         {
-          "name": "ErrorPattern",
-          "title": "Error Pattern to Check",
-          "type": "string"
-        },
-        {
           "name": "HandlerWF",
           "title": "Handler Workflow Id",
           "type": "string"
@@ -1262,6 +1354,11 @@
         {
           "name": "WorkflowIds",
           "title": "Workflow Ids",
+          "type": "string"
+        },
+        {
+          "name": "ErrorPattern",
+          "title": "Error Pattern to Check",
           "type": "string"
         }
       ],
