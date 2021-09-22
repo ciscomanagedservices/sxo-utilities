@@ -48,7 +48,7 @@ Please refer to descriptions provided within the atomic actions/workflows for ad
        3. `Activity Name` (string): name of the activity in the instance where the error is seen
 
 
-    <br>💡 **Pro Tip:** Oversight can also monitor triggers attached to your workflow and invoke your error handler if the trigger status is not in `Started-polling`.
+    <!--br>💡 **Pro Tip:** Oversight can also monitor triggers attached to your workflow and invoke your error handler if the trigger status is not in `Started-polling`. -->
 
     </details>
     
