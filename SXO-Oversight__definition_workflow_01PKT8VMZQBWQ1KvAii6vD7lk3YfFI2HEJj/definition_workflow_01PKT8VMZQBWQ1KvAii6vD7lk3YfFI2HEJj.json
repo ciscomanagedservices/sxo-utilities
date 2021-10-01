@@ -1324,9 +1324,9 @@
         "value": [
           {
             "column_data": {
-              "ErrorPattern": ".*",
-              "HandlerWF": "01RGW22S649OJ3ZSfex1MsXd9ZMDMicZgk0",
-              "WorkflowIds": "01RHRLZA6UUMT6YIfdkHmLVJUurHisYQxAc"
+              "ErrorPattern": "",
+              "HandlerWF": "",
+              "WorkflowIds": ""
             }
           }
         ],
@@ -1393,7 +1393,7 @@
           "atomic": {
             "is_atomic": false
           },
-          "delete_workflow_instance": false,
+          "delete_workflow_instance": true,
           "description": "WARNING: EXPERIMENTAL USE ONLY\nSecureX Orchestrator (SXO) APIs are not generally available/exposed in production yet. However, if the ‘AO’ API scope were to be added to a SecureX API Client, this workflow demonstrates how to use such an API Client to generate and retrieve a JWT token that can be used to make API calls to SXO, assuming the API methods are known to the user. The methodology used in this workflow may be subject to change once this functionality is available in production.\n\nSteps involved:\n1. Generate a new Access Token for Cisco Threat Response (CTR) using the SecureX API Client (with AO scope added) credentials defined in the Account Key for the ‘CTR Admin’ target. This returns the SecureX Auth Token.\n2. Use the SecureX Auth Token to make a call to CTR’s AO endpoint to generate the JWT\n3. Clean up response\n4. Output a secure string with the SXO JWT\n\nA given SXO JWT is valid only for ~10 minutes and needs to be regenerated thereafter using the same methodology. ",
           "display_name": "SXO Token Generation",
           "runtime_user": {
@@ -1410,14 +1410,14 @@
         "object_type": "definition_workflow",
         "actions": [
           {
-            "unique_name": "definition_activity_01NILYNYXSCYN2pvlLuLTcqs66Ec9lwWW1D",
-            "name": "CTRGenerateAccessToken",
-            "title": "CTRGenerateAccessToken",
+            "unique_name": "definition_activity_01RQW74TFLP4C34kBHYDYiv1cC3mCEJdnIL",
+            "name": "Generate SX Token",
+            "title": "Generate SX Token",
             "type": "workflow.atomic_workflow",
             "base_type": "subworkflow",
             "properties": {
               "continue_on_failure": false,
-              "display_name": "CTRGenerateAccessToken",
+              "display_name": "Generate SX Token",
               "runtime_user": {
                 "target_default": true
               },
@@ -1426,7 +1426,7 @@
                 "target_type": "web-service.endpoint",
                 "use_workflow_target": true
               },
-              "workflow_id": "definition_workflow_01779LB6MV0P02kvka9TGV5cEam84NrCTy4"
+              "workflow_id": "definition_workflow_01PP75S3LTBW4420OZU3rdHWKHFnE6aC7yH"
             },
             "object_type": "definition_activity"
           },
@@ -1444,7 +1444,7 @@
               "custom_headers": [
                 {
                   "name": "Authorization",
-                  "value": "Bearer $activity.definition_activity_01NILYNYXSCYN2pvlLuLTcqs66Ec9lwWW1D.output.variable_workflow_01BNOOXA3G6MV1PGAvsfZOKDdMYcE6XS726$"
+                  "value": "Bearer $activity.definition_activity_01RQW74TFLP4C34kBHYDYiv1cC3mCEJdnIL.output.variable_workflow_01PP75S3G7CJY6WAQr2IJC7qga2SIoE09gQ$"
                 }
               ],
               "display_name": "Generate AO JWT",
@@ -1509,6 +1509,6 @@
     }
   ],
   "atomic_workflows": [
-    "definition_workflow_01779LB6MV0P02kvka9TGV5cEam84NrCTy4"
+    "definition_workflow_01PP75S3LTBW4420OZU3rdHWKHFnE6aC7yH"
   ]
 }
