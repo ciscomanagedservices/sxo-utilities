@@ -10,6 +10,19 @@
         "schema_id": "datatype.string",
         "properties": {
           "value": "",
+          "scope": "local",
+          "name": "Updated JSON",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KT33VLRYL2W50MUQPMoGJU9SMwpHzunBz",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
           "scope": "input",
           "name": "Friendly Instance Id",
           "type": "datatype.string",
@@ -17,33 +30,6 @@
           "is_invisible": false
         },
         "unique_name": "variable_workflow_01R0NOJZZG63H0M5uXXGf9VPkkaIEbfjR8x",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "input",
-          "name": "Custom Log Message",
-          "type": "datatype.string",
-          "description": "This is an optional parameter that will be suffixed to the log message",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01R6P0FSMQYLV0jB6HJdE84PoPdfAeq5PdU",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "local",
-          "name": "Activity Name",
-          "type": "datatype.string",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01KT3435AFTJB2sSt33NoKhXExtXALQsvE4",
         "object_type": "variable_workflow"
       },
       {
@@ -90,12 +76,26 @@
         "properties": {
           "value": "",
           "scope": "local",
-          "name": "Updated JSON",
+          "name": "Activity Name",
           "type": "datatype.string",
           "is_required": false,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01KT33VLRYL2W50MUQPMoGJU9SMwpHzunBz",
+        "unique_name": "variable_workflow_01KT3435AFTJB2sSt33NoKhXExtXALQsvE4",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Custom Log Message",
+          "type": "datatype.string",
+          "description": "This is an optional parameter that will be suffixed to the log message",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01R6P0FSMQYLV0jB6HJdE84PoPdfAeq5PdU",
         "object_type": "variable_workflow"
       },
       {
@@ -149,7 +149,7 @@
           },
           "skip_execution": false,
           "target": {
-            "override_workflow_target": true,
+            "execute_on_this_target": true,
             "target_id": "definition_target_01NDU0CZRJT6Y3teqALAe6bW8HBlj6mfRUV",
             "target_type": "web-service.endpoint"
           },
@@ -881,332 +881,12 @@
         "value": [
           {
             "column_data": {
-              "activity_id": "test",
-              "alt_instance_id": "test",
-              "instance_id": "test",
-              "log": "test",
-              "status": "test",
-              "timestamp": "test"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6P1Z099UWZ6N4Q1ABIJEYBlyyYenuJN1",
-              "alt_instance_id": "BC Test WF - 2021-09-07T12:33:43.801739272Z",
-              "instance_id": "01R6P1Z07UM3D0W5YUH2VgLYquoylpvGPAz",
-              "log": "Split Input String by space",
-              "status": "success",
-              "timestamp": "2021-09-07T12:33:44.056072029Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6P1Z1H2UND66qU9ClsIDNCfGhtYo84XQ",
-              "alt_instance_id": "BC Test WF - 2021-09-07T12:33:43.801739272Z",
-              "instance_id": "01R6P1Z07UM3D0W5YUH2VgLYquoylpvGPAz",
-              "log": "Substring",
-              "status": "success",
-              "timestamp": "2021-09-07T12:33:46.589728851Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6P1Z1XCNFF3RqeMtgyTG7aRgOoxer8lq",
-              "alt_instance_id": "BC Test WF - 2021-09-07T12:33:43.801739272Z",
-              "instance_id": "01R6P1Z07UM3D0W5YUH2VgLYquoylpvGPAz",
-              "log": "To Upper",
-              "status": "success",
-              "timestamp": "2021-09-07T12:33:50.851721518Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6P1Z2WTIW62mf2LpswWWsOUbuNvWR06R",
-              "alt_instance_id": "BC Test WF - 2021-09-07T12:33:43.801739272Z",
-              "instance_id": "01R6P1Z07UM3D0W5YUH2VgLYquoylpvGPAz",
-              "log": "Call Webex API",
-              "status": "failed",
-              "timestamp": "2021-09-07T12:33:55.087508743Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6P6CNHUTVH37gDV8tAHMrfutBSxshiMq",
-              "alt_instance_id": "BC Test WF - 2021-09-07T12:39:26.968698405Z",
-              "instance_id": "01R6P6CNDSWGG4jtoHV6hdYmxJWwUKA27T7",
-              "log": "Split Input String by space - This def works",
-              "status": "success",
-              "timestamp": "2021-09-07T12:39:27.262626549Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6P6CP07KX90hOjnYxnvVhY67xI24qr8L",
-              "alt_instance_id": "BC Test WF - 2021-09-07T12:39:26.968698405Z",
-              "instance_id": "01R6P6CNDSWGG4jtoHV6hdYmxJWwUKA27T7",
-              "log": "Substring - Does this work",
-              "status": "success",
-              "timestamp": "2021-09-07T12:39:30.052767553Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6P6CPBXRYT2A4zawzOF1NCEgH2EEtidw",
-              "alt_instance_id": "BC Test WF - 2021-09-07T12:39:26.968698405Z",
-              "instance_id": "01R6P6CNDSWGG4jtoHV6hdYmxJWwUKA27T7",
-              "log": "To Upper - This too thank you",
-              "status": "success",
-              "timestamp": "2021-09-07T12:39:34.350536055Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6P6CQ48RDE2kJ2j1bzUItVWnEoYjLWTw",
-              "alt_instance_id": "BC Test WF - 2021-09-07T12:39:26.968698405Z",
-              "instance_id": "01R6P6CNDSWGG4jtoHV6hdYmxJWwUKA27T7",
-              "log": "Call Webex API - This one should have a custom message",
-              "status": "failed",
-              "timestamp": "2021-09-07T12:39:38.622743086Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q1HOL3HIZ43FNpt67mA3ktwHSVBf1n0",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
-              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
-              "log": "Split Input String by space - This def works",
-              "status": "success",
-              "timestamp": "2021-09-07T13:20:07.362833758Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q1HPJ3DG26hXdSC7mMyzpOvhkCEh2AZ",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
-              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
-              "log": "Substring - Does this work",
-              "status": "success",
-              "timestamp": "2021-09-07T13:20:10.167770089Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q1HP7P9OU611xrmoiEdQD9r9IlWRyjg",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
-              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
-              "log": "For Each Part - This too thank you",
-              "status": "success",
-              "timestamp": "2021-09-07T13:20:15.372921229Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q1HPT55WP2KvURtncUEbULk0DD1HRu8",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
-              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
-              "log": "To Upper - This too thank you",
-              "status": "success",
-              "timestamp": "2021-09-07T13:20:15.372921229Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q1HPGGLYU4TjmsKtHte13ZsJASgmxrW",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
-              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
-              "log": "Parallel Outside Loop - Cmon Gimme A Message",
-              "status": "success",
-              "timestamp": "2021-09-07T13:20:19.375591455Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q1HQHX2I23VdYnhfgH9KR0fS2tJeGu7",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
-              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
-              "log": "Call Webex API - This one should have a custom message",
-              "status": "failed",
-              "timestamp": "2021-09-07T13:20:23.770952818Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q1HQ798HC3DpHKTS2ABM79yxwI1Uji0",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
-              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
-              "log": "Conditional On Input - Ideally this should have one as well",
-              "status": "success",
-              "timestamp": "2021-09-07T13:20:33.200459221Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q1HQFCLVT1ovSBWa1udPNltpDirdtVy",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:20:07.194424027Z",
-              "instance_id": "01R6Q1HOJMXBZ1B2virMGAjI0HrSXwpC0i1",
-              "log": "Sleep it off - Ideally this should have one as well",
-              "status": "success",
-              "timestamp": "2021-09-07T13:20:33.200459221Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q5ZDZXYER3YxdqH3QyfbHSzNePp3YhW",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
-              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
-              "log": "Split Input String by space - This def works",
-              "status": "success",
-              "timestamp": "2021-09-07T13:25:59.471530544Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q5ZFKE3XH0wmLnKqamzPeSuVL50cMkk",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
-              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
-              "log": "Substring - Does this work",
-              "status": "success",
-              "timestamp": "2021-09-07T13:26:02.302168933Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q5ZEUL1074X79OnYzkjg6pHtZMZuoIV",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
-              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
-              "log": "For Each Part - This too thank you",
-              "status": "success",
-              "timestamp": "2021-09-07T13:26:25.575679835Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q5ZG1190L0wGJ23NCslePQtvr39MvEI",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
-              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
-              "log": "To Upper - This too thank you",
-              "status": "success",
-              "timestamp": "2021-09-07T13:26:25.575679835Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q5ZFCOQZ721TMHqoE3jauYT9z0znEyK",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
-              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
-              "log": "Parallel Outside Loop - Cmon Gimme A Message",
-              "status": "success",
-              "timestamp": "2021-09-07T13:26:30.077314882Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q5ZHA9XSO1VLIKl76KnC2nbRFTfAHxv",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
-              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
-              "log": "Call Webex API - This one should have a custom message",
-              "status": "failed",
-              "timestamp": "2021-09-07T13:26:34.772329313Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q5ZGOSIO56pBVucFOREIVocN4AfofHr",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
-              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
-              "log": "Conditional On Input - Ideally this should have one as well",
-              "status": "success",
-              "timestamp": "2021-09-07T13:26:44.617846566Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q5ZH3YYXO7LMaP8paGiPBjCVTlBl69t",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:25:59.199239616Z",
-              "instance_id": "01R6Q5ZDYJ7C11ubIyYhuuEwjkk7oKcKUrD",
-              "log": "Sleep it off - Ideally this should have one as well",
-              "status": "success",
-              "timestamp": "2021-09-07T13:26:44.617846566Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q9TYCD08E5wf2oPAxk9PL2dqJdPdjBn",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
-              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
-              "log": "Split Input String by space - This def works",
-              "status": "success",
-              "timestamp": "2021-09-07T13:31:01.011178136Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q9TZFU8N653n0vdLDreJdMHcb6ouR2e",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
-              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
-              "log": "Substring - Does this work",
-              "status": "success",
-              "timestamp": "2021-09-07T13:31:03.709897938Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q9TZ1RKBO4VE8en8em0ZL0ZKHSkSLi9",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
-              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
-              "log": "For Each Part - This too thank you",
-              "status": "success",
-              "timestamp": "2021-09-07T13:31:08.273078374Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q9TZRO2SS6OgM2hxOa3GglbuKarbDoe",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
-              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
-              "log": "To Upper - This too thank you",
-              "status": "success",
-              "timestamp": "2021-09-07T13:31:08.273078374Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q9TZCPCNM1869QIvKebHupkmQyRusKJ",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
-              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
-              "log": "Parallel Outside Loop - Cmon Gimme A Message",
-              "status": "success",
-              "timestamp": "2021-09-07T13:31:12.139615833Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q9U0JFC6D728sbb4LvvGXQ1zl9fMbMJ",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
-              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
-              "log": "Call Webex API - This one should have a custom message",
-              "status": "failed",
-              "timestamp": "2021-09-07T13:31:14.834910886Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q9U07EUL24sys4adHXborR4QGCOZL8B",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
-              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
-              "log": "Conditional On Input - Ideally this should have one as well",
-              "status": "success",
-              "timestamp": "2021-09-07T13:31:22.438462232Z"
-            }
-          },
-          {
-            "column_data": {
-              "activity_id": "01R6Q9U0GGLNL6eUmsQGkFCyVJgXcaLgx9I",
-              "alt_instance_id": "BC Test WF - 2021-09-07T13:31:00.820634082Z",
-              "instance_id": "01R6Q9TYAV64X1yIxFzxAFpHxuE6L19dNPQ",
-              "log": "Sleep it off - Ideally this should have one as well",
-              "status": "success",
-              "timestamp": "2021-09-07T13:31:22.438462232Z"
+              "activity_id": "",
+              "alt_instance_id": "",
+              "instance_id": "",
+              "log": "",
+              "status": "",
+              "timestamp": ""
             }
           }
         ],
@@ -1225,6 +905,11 @@
       "data_type": "datatype.tabletype",
       "display_name": "Logging Table Data Type With State",
       "columns": [
+        {
+          "name": "timestamp",
+          "title": "Timestamp",
+          "type": "string"
+        },
         {
           "name": "activity_id",
           "title": "Activity ID",
@@ -1248,11 +933,6 @@
         {
           "name": "status",
           "title": "State",
-          "type": "string"
-        },
-        {
-          "name": "timestamp",
-          "title": "Timestamp",
           "type": "string"
         }
       ],
@@ -1287,7 +967,7 @@
           "atomic": {
             "is_atomic": false
           },
-          "delete_workflow_instance": false,
+          "delete_workflow_instance": true,
           "description": "WARNING: EXPERIMENTAL USE ONLY\nSecureX Orchestrator (SXO) APIs are not generally available/exposed in production yet. However, if the ‘AO’ API scope were to be added to a SecureX API Client, this workflow demonstrates how to use such an API Client to generate and retrieve a JWT token that can be used to make API calls to SXO, assuming the API methods are known to the user. The methodology used in this workflow may be subject to change once this functionality is available in production.\n\nSteps involved:\n1. Generate a new Access Token for Cisco Threat Response (CTR) using the SecureX API Client (with AO scope added) credentials defined in the Account Key for the ‘CTR Admin’ target. This returns the SecureX Auth Token.\n2. Use the SecureX Auth Token to make a call to CTR’s AO endpoint to generate the JWT\n3. Clean up response\n4. Output a secure string with the SXO JWT\n\nA given SXO JWT is valid only for ~10 minutes and needs to be regenerated thereafter using the same methodology. ",
           "display_name": "SXO Token Generation",
           "runtime_user": {
@@ -1304,14 +984,14 @@
         "object_type": "definition_workflow",
         "actions": [
           {
-            "unique_name": "definition_activity_01NILYNYXSCYN2pvlLuLTcqs66Ec9lwWW1D",
-            "name": "CTRGenerateAccessToken",
-            "title": "CTRGenerateAccessToken",
+            "unique_name": "definition_activity_01RQW74TFLP4C34kBHYDYiv1cC3mCEJdnIL",
+            "name": "Generate SX Token",
+            "title": "Generate SX Token",
             "type": "workflow.atomic_workflow",
             "base_type": "subworkflow",
             "properties": {
               "continue_on_failure": false,
-              "display_name": "CTRGenerateAccessToken",
+              "display_name": "Generate SX Token",
               "runtime_user": {
                 "target_default": true
               },
@@ -1320,7 +1000,7 @@
                 "target_type": "web-service.endpoint",
                 "use_workflow_target": true
               },
-              "workflow_id": "definition_workflow_01779LB6MV0P02kvka9TGV5cEam84NrCTy4"
+              "workflow_id": "definition_workflow_01PP75S3LTBW4420OZU3rdHWKHFnE6aC7yH"
             },
             "object_type": "definition_activity"
           },
@@ -1338,7 +1018,7 @@
               "custom_headers": [
                 {
                   "name": "Authorization",
-                  "value": "Bearer $activity.definition_activity_01NILYNYXSCYN2pvlLuLTcqs66Ec9lwWW1D.output.variable_workflow_01BNOOXA3G6MV1PGAvsfZOKDdMYcE6XS726$"
+                  "value": "Bearer $activity.definition_activity_01RQW74TFLP4C34kBHYDYiv1cC3mCEJdnIL.output.variable_workflow_01PP75S3G7CJY6WAQr2IJC7qga2SIoE09gQ$"
                 }
               ],
               "display_name": "Generate AO JWT",
@@ -1403,6 +1083,6 @@
     }
   ],
   "atomic_workflows": [
-    "definition_workflow_01779LB6MV0P02kvka9TGV5cEam84NrCTy4"
+    "definition_workflow_01PP75S3LTBW4420OZU3rdHWKHFnE6aC7yH"
   ]
 }
